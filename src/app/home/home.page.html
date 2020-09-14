@@ -1,20 +1,64 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="danger">
+        <ion-title>
+            Trucka
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div *ngIf="!terminado">
+        <ion-list>
+            <ion-radio-group [(ngModel)]="preguntas[posicion].respuesta" (ngModelChange)="checarOpcion()">
+                <ion-list-header>
+                    <h3>Articulo: {{preguntas[posicion].articulo}}</h3>
+                </ion-list-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+                <ion-item>
+                    <ion-label>Buen Estado</ion-label>
+                    <ion-radio slot="start" value="1"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>Mal Estado</ion-label>
+                    <ion-radio slot="start" value="2"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>No Existe</ion-label>
+                    <ion-radio slot="start" value="3"></ion-radio>
+                </ion-item>
+            </ion-radio-group>
+        </ion-list>
+
+        <img (click)="hacerFoto()" src="assets/addImage.png" *ngIf="preguntas[posicion].respuesta === '2' && preguntas[posicion].imagen === '' ">
+        <ion-img style="height: 150px;" src="{{preguntas[posicion].imagen}}" *ngIf="preguntas[posicion].respuesta === '2' && preguntas[posicion].imagen !== '' "></ion-img>
+
+        <ion-item *ngIf="preguntas[posicion].respuesta === '2'">
+            <ion-label position="stacked">Comentarios</ion-label>
+            <ion-textarea>
+            </ion-textarea>
+        </ion-item>
+        <ion-grid>
+            <ion-row>
+                <!--         <ion-col>
+                    <ion-button (click)="anterior()" *ngIf="posicion > 0">Anterior </ion-button>
+                </ion-col>
+                -->
+                <ion-col style="float: right;">
+                    <ion-button (click)="siguiente()" style="float: right;" disabled="{{HabilitarSiguiente}}">Siguiente </ion-button>
+
+                </ion-col>
+
+            </ion-row>
+
+        </ion-grid>
+    </div>
+    <div *ngIf="terminado">
+        <h3>Reporte terminado</h3>
+        <h2>Gracias!</h2>
+        <ion-button (click)="enviar()">Enviar </ion-button>
+
+
+    </div>
 </ion-content>
