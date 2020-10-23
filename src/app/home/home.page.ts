@@ -13,7 +13,8 @@ export class HomePage {
   terminado=false;
   TomarFoto = false;
   HabilitarSiguiente= true;
-  constructor(private camera: Camera) {
+  constructor(private camera: Camera) {   
+
     this.preguntas = [{
       articulo: 'Faro',
       respuesta: '',
@@ -40,7 +41,8 @@ export class HomePage {
       imagen: ''
     }]
   }
-  siguiente(){
+
+  siguiente( ){
     let tope = this.preguntas.length - 1;
     console.log(tope);
 
@@ -50,6 +52,8 @@ export class HomePage {
     }else{
       console.log('2')
 
+
+
       this.posicion = this.posicion + 1;
       this.HabilitarSiguiente = true;
 
@@ -57,7 +61,7 @@ export class HomePage {
   }
   anterior(){
     this.posicion = this.posicion - 1;
-
+    console.log(this.posicion)
   }
   enviar(){
     console.log(this.preguntas);
@@ -66,6 +70,10 @@ export class HomePage {
     console.log('hola');
     this.HabilitarSiguiente = false;
   }
+
+
+
+
   async hacerFoto() {
     
     const options: CameraOptions = {

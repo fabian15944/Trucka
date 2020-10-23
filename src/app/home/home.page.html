@@ -7,8 +7,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+
     <div *ngIf="!terminado">
         <ion-list>
+
+
             <ion-radio-group [(ngModel)]="preguntas[posicion].respuesta" (ngModelChange)="checarOpcion()">
                 <ion-list-header>
                     <h3>Articulo: {{preguntas[posicion].articulo}}</h3>
@@ -31,6 +35,7 @@
             </ion-radio-group>
         </ion-list>
 
+
         <img (click)="hacerFoto()" src="assets/addImage.png" *ngIf="preguntas[posicion].respuesta === '2' && preguntas[posicion].imagen === '' ">
         <ion-img style="height: 150px;" src="{{preguntas[posicion].imagen}}" *ngIf="preguntas[posicion].respuesta === '2' && preguntas[posicion].imagen !== '' "></ion-img>
 
@@ -38,6 +43,7 @@
             <ion-label position="stacked">Comentarios</ion-label>
             <ion-textarea>
             </ion-textarea>
+
         </ion-item>
         <ion-grid>
             <ion-row>
@@ -45,10 +51,15 @@
                     <ion-button (click)="anterior()" *ngIf="posicion > 0">Anterior </ion-button>
                 </ion-col>
                 -->
+
                 <ion-col style="float: right;">
                     <ion-button (click)="siguiente()" style="float: right;" disabled="{{HabilitarSiguiente}}">Siguiente </ion-button>
 
                 </ion-col>
+
+                <!-- <ion-col style="left: auto;">
+                    <ion-button (click)="anterior()">Anterior</ion-button>
+                </ion-col> -->
 
             </ion-row>
 
@@ -57,7 +68,7 @@
     <div *ngIf="terminado">
         <h3>Reporte terminado</h3>
         <h2>Gracias!</h2>
-        <ion-button (click)="enviar()">Enviar </ion-button>
+        <ion-button routerLink="/start" (click)="enviar()">Enviar </ion-button>
 
 
     </div>

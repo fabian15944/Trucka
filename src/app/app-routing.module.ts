@@ -8,9 +8,18 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'start',
     pathMatch: 'full'
   },
+  {
+    path: 'start',
+    loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
+  },  {
+    path: 'busqueda',
+    loadChildren: () => import('./busqueda/busqueda.module').then( m => m.BusquedaPageModule)
+  },
+
+
 ];
 
 @NgModule({
