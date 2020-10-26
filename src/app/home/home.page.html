@@ -1,40 +1,100 @@
 <ion-header [translucent]="true">
     <ion-toolbar color="danger">
         <ion-title>
-            Trucka
+            Reporte
+            <!--   <ion-img src="assets/logoTrucka.png" style="height: 30px;"></ion-img>-->
+
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-
+    <div class="main">
+        <h2>1315421</h2>
+        <h2 style="color: black;">FRENTE</h2>
+        <ion-img style="height: 250px;" src="assets/trailer.jpg"></ion-img>
+    </div>
     <div *ngIf="!terminado">
+
         <ion-list>
 
 
-            <ion-radio-group [(ngModel)]="preguntas[posicion].respuesta" (ngModelChange)="checarOpcion()">
+            <ion-radio-group [(ngModel)]="preguntas[posicion].tiene" (ngModelChange)="checarOpcion()">
+
                 <ion-list-header>
-                    <h3>Articulo: {{preguntas[posicion].articulo}}</h3>
+                    <h3>¿Tiene {{preguntas[posicion].articulo}}?</h3>
                 </ion-list-header>
 
+
                 <ion-item>
-                    <ion-label>Buen Estado</ion-label>
-                    <ion-radio slot="start" value="1"></ion-radio>
+                    <ion-label>Si</ion-label>
+                    <ion-radio slot="start" value=true></ion-radio>
                 </ion-item>
 
                 <ion-item>
-                    <ion-label>Mal Estado</ion-label>
-                    <ion-radio slot="start" value="2"></ion-radio>
+                    <ion-label>No</ion-label>
+                    <ion-radio slot="start" value=false></ion-radio>
                 </ion-item>
 
-                <ion-item>
-                    <ion-label>No Existe</ion-label>
-                    <ion-radio slot="start" value="3"></ion-radio>
-                </ion-item>
             </ion-radio-group>
         </ion-list>
+        <div *ngIf="preguntas[posicion].tiene === 'true'">
+            <ion-list>
+                <ion-radio-group [(ngModel)]="preguntas[posicion].respuesta" (ngModelChange)="checarOpcion()">
 
+
+                    <ion-list-header>
+                        <h3>¿Cual es su estado?</h3>
+                    </ion-list-header>
+
+                    <ion-item>
+                        <ion-label>Buen Estado</ion-label>
+                        <ion-radio slot="start" value="1"></ion-radio>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Dañado</ion-label>
+                        <ion-radio slot="start" value="2"></ion-radio>
+                    </ion-item>
+
+
+                </ion-radio-group>
+            </ion-list>
+
+            <ion-list *ngIf="preguntas[posicion].respuesta === '2'">
+                <ion-radio-group [(ngModel)]="preguntas[posicion].estado" (ngModelChange)="checarOpcion()">
+
+
+                    <ion-list-header>
+                        <h3>Selecciona el daño encontrado</h3>
+                    </ion-list-header>
+
+                    <ion-item>
+                        <ion-label>Raspado</ion-label>
+                        <ion-radio slot="start" value="raspado"></ion-radio>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label>Fisurado</ion-label>
+                        <ion-radio slot="start" value="fisurado"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Estrellado</ion-label>
+                        <ion-radio slot="start" value="estrellado"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Falta alguna de las piezas</ion-label>
+                        <ion-radio slot="start" value="falta"></ion-radio>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Ninguna de las anteriores</ion-label>
+                        <ion-radio slot="start" value="ninguna"></ion-radio>
+                    </ion-item>
+
+
+                </ion-radio-group>
+            </ion-list>
+        </div>
 
         <img (click)="hacerFoto()" src="assets/addImage.png" *ngIf="preguntas[posicion].respuesta === '2' && preguntas[posicion].imagen === '' ">
         <ion-img style="height: 150px;" src="{{preguntas[posicion].imagen}}" *ngIf="preguntas[posicion].respuesta === '2' && preguntas[posicion].imagen !== '' "></ion-img>

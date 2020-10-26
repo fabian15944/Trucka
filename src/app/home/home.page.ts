@@ -16,28 +16,36 @@ export class HomePage {
   constructor(private camera: Camera) {   
 
     this.preguntas = [{
-      articulo: 'Faro',
+      articulo: 'Parabrisas',
+      tiene: '',
       respuesta: '',
       comentario: '',
+      estado: '',
       imagen: ''
       
     },
     {
-      articulo: 'Parabrisas',
+      articulo: 'Faro izquierdo',
+      tiene: '',
       respuesta: '',
       comentario: '',
+      estado: '',
       imagen: ''
     },
     {
       articulo: 'Antena',
+      tiene: '',
       respuesta: '',
       comentario: '',
+      estado: '',
       imagen: ''
     },
     {
       articulo: 'Retrovisor',
+      tiene: '',
       respuesta: '',
       comentario: '',
+      estado: '',
       imagen: ''
     }]
   }
