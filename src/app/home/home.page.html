@@ -1,10 +1,14 @@
 <ion-header [translucent]="true">
     <ion-toolbar color="danger">
-        <ion-title>
-            Reporte
-            <!--   <ion-img src="assets/logoTrucka.png" style="height: 30px;"></ion-img>-->
+        <ion-buttons style="height: 30px;">
+            <ion-title>
+                Reporte
+                <!--   <ion-img src="assets/logoTrucka.png" style="height: 30px;"></ion-img>-->
 
-        </ion-title>
+            </ion-title>
+            <ion-img style="height: 30px; margin-left: 140px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
+
     </ion-toolbar>
 </ion-header>
 
@@ -28,19 +32,19 @@
 
                 <ion-item>
                     <ion-label>Si</ion-label>
-                    <ion-radio slot="start" value=true></ion-radio>
+                    <ion-radio slot="start" value="true"></ion-radio>
                 </ion-item>
 
                 <ion-item>
                     <ion-label>No</ion-label>
-                    <ion-radio slot="start" value=false></ion-radio>
+                    <ion-radio slot="start" value="false"></ion-radio>
                 </ion-item>
 
             </ion-radio-group>
         </ion-list>
         <div *ngIf="preguntas[posicion].tiene === 'true'">
             <ion-list>
-                <ion-radio-group [(ngModel)]="preguntas[posicion].respuesta" (ngModelChange)="checarOpcion()">
+                <ion-radio-group [(ngModel)]="preguntas[posicion].respuesta" (ngModelChange)="checarRespuesta()">
 
 
                     <ion-list-header>
@@ -62,7 +66,7 @@
             </ion-list>
 
             <ion-list *ngIf="preguntas[posicion].respuesta === '2'">
-                <ion-radio-group [(ngModel)]="preguntas[posicion].estado" (ngModelChange)="checarOpcion()">
+                <ion-radio-group [(ngModel)]="preguntas[posicion].estado" (ngModelChange)="checarEstado()">
 
 
                     <ion-list-header>

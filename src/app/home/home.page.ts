@@ -76,7 +76,21 @@ export class HomePage {
   }
   checarOpcion(){
     console.log('hola');
-    this.HabilitarSiguiente = false;
+    if(this.preguntas[this.posicion].tiene === 'false'){
+      this.HabilitarSiguiente = false;
+    }
+  }
+  checarRespuesta(){
+    console.log('hola');
+    if(this.preguntas[this.posicion].respuesta === '1'){
+      this.HabilitarSiguiente = false;
+    }
+  }
+  checarEstado(){
+    console.log('hola');
+    if(this.preguntas[this.posicion].estado){
+      this.HabilitarSiguiente = false;
+    }
   }
 
 
