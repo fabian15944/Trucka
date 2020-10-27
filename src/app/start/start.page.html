@@ -1,13 +1,17 @@
 <ion-header>
     <ion-toolbar color="danger">
-        <ion-title>Inicio</ion-title>
+        <ion-title>Reportes</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <br>
-    <ion-select placeholder="Buscar Por..."></ion-select>
-    <br>
+    <ion-item>
+        <ion-label>Reporte</ion-label>
+        <ion-select placeholder="Buscar Por..."></ion-select>
+
+    </ion-item>
+
     <ion-searchbar placeholder="inserta codigo de unidad"></ion-searchbar>
     <br>
     <ion-grid>
@@ -18,6 +22,48 @@
                 <ion-button style="float: right;" color="danger" routerLink="/busqueda">Nuevo Reporte</ion-button>
             </ion-col>
         </ion-row>
+        <ion-row><br></ion-row>
+        <ion-row>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col style="font-size: 12px; float: right;">Total_Reportes</ion-col>
+            <ion-col style="font-size: 12px;">Daños</ion-col>
+        </ion-row>
     </ion-grid>
 
+    <ion-card *ngFor="let reporte of reportes index as i">
+        <ion-card-content (click)="MostrarCont(i)">
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-card-subtitle style="font-size: 16px; font-weight: bold;">
+                            {{reporte.codigo}}
+                            <div style="float: right; font-size: 16px; font-weight: bold; margin-right: 20px; background-color: blue; color: white; width: 20px; text-align: center; border-radius: 3px;">{{reporte.fallas}}</div>
+                            <div style="float: right; font-size: 16px; font-weight: bold; margin-right: 50px; background-color: red; color: white; width: 20px; text-align: center; border-radius: 3px;">{{reporte.total_reportes}}</div>
+
+                        </ion-card-subtitle>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <div *ngIf="reporte.mostrar">
+                <ion-card *ngFor="let rep of reporte.reportes">
+                    <ion-card-content>
+
+                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold;">{{reporte.codigo}}
+                            <div *ngIf="rep.estado === 'fallo'" style="float: right; font-size: 16px; font-weight: bold; background-color: blue; color: white; width: 20px; text-align: center; border-radius: 3px;">{{rep.cant_fallos}}</div>
+
+                        </ion-card-subtitle>
+
+                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold;">{{rep.operador}}</ion-card-subtitle>
+                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold;">{{rep.fecha}}</ion-card-subtitle>
+
+                    </ion-card-content>
+
+                </ion-card>
+            </div>
+
+
+
+        </ion-card-content>
+    </ion-card>
 </ion-content>

@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-
+export class HomePage implements OnInit{
+  trailer: any;
   preguntas: any;
   posicion = 0;
   terminado=false;
   TomarFoto = false;
   HabilitarSiguiente= true;
-  constructor(private camera: Camera) {   
+  constructor(private camera: Camera, private routerActivated: ActivatedRoute) {  
+    this.trailer =  this.routerActivated.snapshot.queryParams.trailer;
+
 
     this.preguntas = [{
       articulo: 'Parabrisas',
@@ -66,6 +69,9 @@ export class HomePage {
       this.HabilitarSiguiente = true;
 
     }
+  }
+  ngOnInit(){
+    console.log(this.trailer)
   }
   anterior(){
     this.posicion = this.posicion - 1;

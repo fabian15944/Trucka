@@ -9,11 +9,43 @@
     <ion-grid>
         <ion-row>
             <ion-col style="float: right;">
-                <ion-button style="float:initial" routerLink="/home" color="danger">Buscar</ion-button>
+                <ion-button style="float: right;" (click)="buscar()" color="danger">Buscar</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
+    <ion-card *ngIf="MostrarInfo">
+        <ion-card-content>
 
+            <ion-card-subtitle class="fuente1" color="danger">Datos de la unidad</ion-card-subtitle>
+            <br>
+            <ion-card-subtitle class="fuente1">Numero de Placa:</ion-card-subtitle>
+            <ion-item>
+                <ion-label class="fuente2">{{Trailer.numero_placa}}</ion-label>
+            </ion-item>
+            <ion-card-subtitle class="fuente1">Conductor:</ion-card-subtitle>
+            <ion-item>
+                <ion-label class="fuente2">{{Trailer.conductor}}</ion-label>
+            </ion-item>
+            <ion-card-subtitle class="fuente1">Licencia de Conducir:</ion-card-subtitle>
+
+            <ion-item>
+                <ion-label class="fuente2">{{Trailer.licencia}}</ion-label>
+
+            </ion-item>
+
+
+        </ion-card-content>
+    </ion-card>
+    <ion-grid *ngIf="MostrarInfo">
+        <ion-row>
+            <ion-col style="float: right;">
+                <ion-button style="float: left;" (click)="buscar()" color="danger">Cancelar</ion-button>
+            </ion-col>
+            <ion-col style="float: right;">
+                <ion-button style="float: right;" (click)="redirect()" color="danger">Siguiente</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
 
 </ion-content>
