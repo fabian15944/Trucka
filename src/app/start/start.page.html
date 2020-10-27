@@ -49,13 +49,13 @@
                 <ion-card *ngFor="let rep of reporte.reportes">
                     <ion-card-content>
 
-                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold;">{{reporte.codigo}}
+                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px; color: rgb(235, 19, 19);">{{reporte.codigo}}
                             <div *ngIf="rep.estado === 'fallo'" style="float: right; font-size: 16px; font-weight: bold; background-color: blue; color: white; width: 20px; text-align: center; border-radius: 3px;">{{rep.cant_fallos}}</div>
 
                         </ion-card-subtitle>
 
-                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold;">{{rep.operador}}</ion-card-subtitle>
-                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold;">{{rep.fecha}}</ion-card-subtitle>
+                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px;">{{rep.operador}}</ion-card-subtitle>
+                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px;">{{rep.fecha}}</ion-card-subtitle>
 
                     </ion-card-content>
 
