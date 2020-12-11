@@ -1,51 +1,65 @@
 <ion-header>
     <ion-toolbar color="danger">
-        <ion-title>Busqueda</ion-title>
+
+        <ion-buttons style="height: 30px;">
+            <ion-back-button defaultHref="/start"></ion-back-button>
+            <ion-title>Busqueda</ion-title>
+
+
+            <ion-img style="height: 40px; margin-center: 140px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
-    <ion-searchbar placeholder="Ingresa el codigo de la unidad"></ion-searchbar>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Iniciando" refreshingSpinner="circular" refreshingText="Cargando...">
+        </ion-refresher-content>
+    </ion-refresher>
+
+    <ion-toolbar>
+        <ion-searchbar class="mayusculas" placeholder="Codigo de la unidad" value="{{numero}}" [(ngModel)]="numero" animated="true"></ion-searchbar>
+    </ion-toolbar>
     <ion-grid>
         <ion-row>
             <ion-col style="float: right;">
-                <ion-button style="float: right;" (click)="buscar()" color="danger">Buscar</ion-button>
+                <ion-button style="float: right;" (click)="vbuscador()" color="danger">Buscar</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
+
     <ion-card *ngIf="MostrarInfo">
         <ion-card-content>
 
-            <ion-card-subtitle class="fuente1" color="danger">Datos de la unidad</ion-card-subtitle>
+            <ion-card-subtitle class="fuente1" color="danger">Datos de la unidad.</ion-card-subtitle>
             <br>
-            <ion-card-subtitle class="fuente1">Numero de Placa:</ion-card-subtitle>
-            <ion-item>
-                <ion-label class="fuente2">{{Trailer.numero_placa}}</ion-label>
-            </ion-item>
+
             <ion-card-subtitle class="fuente1">Conductor:</ion-card-subtitle>
             <ion-item>
-                <ion-label class="fuente2">{{Trailer.conductor}}</ion-label>
+                <ion-label class="fuente2">{{Numeconomico.recordset[0].nom_tra}}</ion-label>
             </ion-item>
-            <ion-card-subtitle class="fuente1">Licencia de Conducir:</ion-card-subtitle>
 
+            <ion-card-subtitle class="fuente1">Numero de Placa:</ion-card-subtitle>
             <ion-item>
-                <ion-label class="fuente2">{{Trailer.licencia}}</ion-label>
-
+                <ion-label class="fuente2">{{Numeconomico.recordset[0].placas_uni}}</ion-label>
             </ion-item>
-
 
         </ion-card-content>
     </ion-card>
     <ion-grid *ngIf="MostrarInfo">
         <ion-row>
             <ion-col style="float: right;">
-                <ion-button style="float: left;" (click)="buscar()" color="danger">Cancelar</ion-button>
+                <ion-button style="float: left;" (click)=" BtnCancelar()" color="danger">Cancelar</ion-button>
             </ion-col>
             <ion-col style="float: right;">
-                <ion-button style="float: right;" (click)="redirect()" color="danger">Siguiente</ion-button>
+                <ion-button style="float: right;" (click)="alertNull()" color="danger">Siguiente</ion-button>
             </ion-col>
         </ion-row>
     </ion-grid>
 
+    <div *ngIf="!MostrarInfo">
+        <h1>No hay datos por mostrar</h1>
+    </div>
 
 </ion-content>

@@ -1,12 +1,19 @@
 <ion-header>
     <ion-toolbar color="danger">
-        <ion-title>Reportes</ion-title>
+
+        <ion-buttons style="height: 30px;">
+
+            <ion-title>Reportes</ion-title>
+
+            <ion-img style="height: 40px; margin-left: 140px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <br>
     <ion-item>
+
         <ion-label>Reporte</ion-label>
         <ion-select placeholder="Buscar Por..."></ion-select>
 
@@ -18,7 +25,7 @@
         <ion-row>
 
             <ion-col style="float: right;">
-                <!-- <ion-button (click)="siguiente()" style="float: right;" disabled="{{HabilitarSiguiente}}">Siguiente </ion-button> -->
+
                 <ion-button style="float: right;" color="danger" routerLink="/busqueda">Nuevo Reporte</ion-button>
             </ion-col>
         </ion-row>
@@ -53,6 +60,7 @@
                             <div *ngIf="rep.estado === 'fallo'" style="float: right; font-size: 16px; font-weight: bold; background-color: blue; color: white; width: 20px; text-align: center; border-radius: 3px;">{{rep.cant_fallos}}</div>
 
                         </ion-card-subtitle>
+
 
                         <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px;">{{rep.operador}}</ion-card-subtitle>
                         <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px;">{{rep.fecha}}</ion-card-subtitle>
