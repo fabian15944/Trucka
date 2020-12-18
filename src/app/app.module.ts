@@ -14,12 +14,13 @@ import {HttpClientModule} from '@angular/common/http'
 // storage
 import { Network } from '@ionic-native/network/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-  
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,Ng2SearchPipeModule,
     IonicStorageModule.forRoot(),
     ],
   providers: [

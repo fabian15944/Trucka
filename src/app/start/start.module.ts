@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { StartPageRoutingModule } from './start-routing.module';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { StartPage } from './start.page';
 
@@ -13,7 +14,8 @@ import { StartPage } from './start.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    StartPageRoutingModule
+    StartPageRoutingModule,
+    Ng2SearchPipeModule
   ],
   declarations: [StartPage]
 })

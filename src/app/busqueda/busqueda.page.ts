@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { BuscarService } from '../Services/buscar.service';
 import Swal from 'sweetalert2'
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import 'sweetalert2/src/sweetalert2.scss'
 
 
 @Component({
@@ -14,12 +15,13 @@ export class BusquedaPage implements OnInit {
   MostrarInfo = false;
   Numeconomico: any;
   numero = "";
-
+  no_serie_uni: any;
+  
   constructor(
     private router: Router,
     public serviciobuscar: BuscarService,
     private alertCtrl: AlertController,
-
+    public loadingController: LoadingController
   ) {
     this.Numeconomico = [];
 
@@ -28,11 +30,23 @@ export class BusquedaPage implements OnInit {
   ngOnInit() {
    
   }
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Por Favor Espere...',
+      duration: 2000
+    });
+    await loading.present();
 
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Cargando...!');
+  }
   buscar() {
     this.serviciobuscar.getTractos(this.numero).then(
       (Ntracto) => {
         this.Numeconomico = this.serviciobuscar.Ntracto;
+      
+        this.no_serie_uni = this.Numeconomico.recordset[0].no_serie_uni;
         if(this.Numeconomico.recordset.length === 0){
           console.log('no existe')
               this.MostrarInfo = false;
@@ -70,11 +84,14 @@ export class BusquedaPage implements OnInit {
     let navParams: NavigationExtras = {
       queryParams: {
         trailer: this.numero,
-        conductor: this.Numeconomico.recordset[0].nom_tra
+        conductor: this.Numeconomico.recordset[0].nom_tra,
+        Marca: this.Numeconomico.recordset[0].marca
         
       }
     }
-    this.router.navigate(['home'], navParams);   
+
+    this.router.navigate(['home'], navParams);  
+    this.presentLoading();
   }
 
   doRefresh(event) {
@@ -101,7 +118,9 @@ export class BusquedaPage implements OnInit {
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-class',
       header: '!Atencion¡',
-      message: '¿Los datos son correctos?',   
+      subHeader:'¿El numero de serie es correcto?',
+      message: `${this.no_serie_uni}`, 
+        
       buttons: [
           {
             text: 'Cancelar',
@@ -122,7 +141,7 @@ export class BusquedaPage implements OnInit {
     });
     await alert.present();
     }
-  
+   
 
 
     BtnCancelar(){
@@ -134,6 +153,8 @@ export class BusquedaPage implements OnInit {
       });
       this.MostrarInfo = false;
     }
+
+
 
 }
 

@@ -14,11 +14,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <div class="fecha">
+        <ion-input disabled="true" id="fecha" style=" color: red;  font-size: 10px; font-weight: bold;" value="{{date | date:'dd/MM/yyyy'}}">
 
+        </ion-input>
+    </div>
 
     <div class="main">
+
         <h2>{{trailer}}</h2>
-        <h2 style="color: black;">{{articulo.recordset[0].ubicacion}}</h2>
+        <h2 style="color: black;">{{ubicacion}}</h2>
         <ion-img style="height: 250px;" src="assets/trailer.jpg"></ion-img>
     </div>
     <div *ngIf="!terminado">
@@ -81,12 +86,37 @@
             </ion-list>
         </div>
 
-        <img (click)="hacerFoto()" src="assets/addImage.png" *ngIf="reporte[posicion].estado === 'Dañado' &&  reporte[posicion].imagen === '' ">
-        <ion-img style="height: 150px;" src="{{reporte[posicion].imagen}}" *ngIf="reporte[posicion].estado === 'Dañado' && reporte[posicion].imagen !== '' "></ion-img>
+        <img (click)="hacerFoto()" src="assets/addImage.png" *ngIf="reporte[posicion].estado === 'Dañado' && !reporte[posicion].imagen[0]  ">
+        <!-- <ion-img style="height: 150px;" src="{{reporte[posicion].imagen}}" *ngIf="reporte[posicion].estado === 'Dañado' && reporte[posicion].imagen[0] "></ion-img> -->
+        <ion-slides #slides *ngIf="reporte[posicion].imagen[0]" pager="true" [options]="slideOpts" pager="true">
+            <ion-slide *ngFor="let foto of reporte[posicion].imagen index as i">
+                <ion-grid>
+                    <ion-row>
+                        <ion-img src="{{foto}}"></ion-img>
 
+                    </ion-row>
+                    <ion-row>
+                        <ion-label style="margin-top: 35px; margin-right: 170px; ">{{i + 1}} de {{longitudImagenes}}</ion-label>
+
+                        <ion-button (click)="hacerFoto()" color="light">
+                            <ion-icon class="add" name="camera-outline"></ion-icon>
+                        </ion-button>
+
+                        <ion-button color="light" (click)="eliminarImagen(i)">
+                            <ion-icon class="trash" name="trash-outline"></ion-icon>
+                        </ion-button>
+                    </ion-row>
+                </ion-grid>
+
+
+
+            </ion-slide>
+
+
+        </ion-slides>
         <ion-item *ngIf="reporte[posicion].estado === 'Dañado'">
             <ion-label position="stacked">Comentarios</ion-label>
-            <ion-textarea placeholder="Escribe un comentario">
+            <ion-textarea placeholder="Escribe un comentario" [(ngModel)]="reporte[posicion].comentario">
             </ion-textarea>
         </ion-item>
         <ion-grid>

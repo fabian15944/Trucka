@@ -15,7 +15,7 @@ export class BuscarService {
   constructor(private http: HttpClient) {
     this.url = environment.urlApi;
   }
-  getTractos(numero): Promise<any> {
+  getTractos(numero): Promise<void> {
   
     return new Promise((resolve, reject) => {
       this.http.get(this.url + `buscar/${numero}`).subscribe(Data => {

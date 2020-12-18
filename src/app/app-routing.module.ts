@@ -14,9 +14,14 @@ const routes: Routes = [
   {
     path: 'start',
     loadChildren: () => import('./start/start.module').then( m => m.StartPageModule)
-  },  {
+  },
+  {
     path: 'busqueda',
     loadChildren: () => import('./busqueda/busqueda.module').then( m => m.BusquedaPageModule)
+  },
+  {
+    path: 'historial-reportes',
+    loadChildren: () => import('./historial-reportes/historial-reportes.module').then( m => m.HistorialReportesPageModule)
   },
 
 

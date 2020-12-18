@@ -3,9 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { NetworkService, ConnectionStatus } from './network.service';
 import { Storage } from '@ionic/storage';
-import { Observable, from } from 'rxjs';
-import { tap, map, catchError } from 'rxjs/operators';
 import { OfflineManagerService } from './offline-manager.service';
+import Swal from 'sweetalert2';
 
 const API_STORAGE_KEY = 'specialkey';
 
@@ -25,13 +24,13 @@ export class ArticulosService {
     this.url = environment.urlApi;
    }
    
-   getArticulos(forceRefresh: boolean = false): Promise <any>{
+   getArticulos(forceRefresh: boolean = false, Marca): Promise <void>{
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline || !forceRefresh) {
-      // Return the cached data from Storage
-       this.getLocalData('specialkey-articulo');
+      
+      return this.getLocalData('articulo');
     } else {
     return new Promise((resolve, reject) => {
-      this.http.get(this.url + 'articulos').subscribe(Data => {
+      this.http.get(this.url + `articulos/${Marca}`).subscribe(Data => {
         // console.log(Data)
         this.articulo = Data;
         console.log(this.articulo)
@@ -47,15 +46,31 @@ export class ArticulosService {
   }
   
    }
-
-   private getLocalData(key) {
-    return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((Data) =>{
-        this.articulo = Data;
-    });
-  }
-  private setLocalData(key, data) {
+   private setLocalData(key, data) {
     this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
   }
+   private getLocalData(key) {
+    console.log('return local data!');
+    // return this.storage.get(`${API_STORAGE_KEY}-${key}`).then(() =>{
+    //     this.articulo = Data;
+    // });
+
+    try {
+      return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((valor) =>{
+        this.articulo = valor;
+      console.log("Hola getlocal date", valor)
+  });
+    } catch (error) {
+      Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Error',
+            text: error,
+            showConfirmButton: true         
+          });
+    }
+  }
+  
 // postArticulos(): Promise<any>{
 //   return new Promise((resolve, reject) =>{
 //    this.http.post()

@@ -1,0 +1,110 @@
+<ion-header>
+    <ion-toolbar color="danger">
+        <ion-title>Reporte de la unidad</ion-title>
+
+        <ion-buttons slot="start">
+            <ion-back-button (click)="dismiss()"></ion-back-button>
+            <ion-back-button defaultHref="/start"></ion-back-button>
+
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+
+    <br>
+
+
+    <ion-card>
+        <ion-card-content>
+
+            <ion-card-subtitle class="centrado" color="danger">Datos de la unidad:</ion-card-subtitle>
+            <br>
+
+            <ion-card-subtitle class="fuente1">Número de la Unidad:</ion-card-subtitle>
+            <ion-item>
+                <ion-label class="fuente2">{{numUnidad}}</ion-label>
+            </ion-item>
+
+            <ion-card-subtitle class="fuente1">Sucursal:</ion-card-subtitle>
+            <ion-item>
+                <ion-label class="fuente2">{{sucursal}}</ion-label>
+            </ion-item>
+            <ion-card-subtitle class="fuente1">Fecha:</ion-card-subtitle>
+            <ion-item>
+                <ion-label class="fuente2">{{fecha}}</ion-label>
+            </ion-item>
+            <ion-card-subtitle class="fuente1">Encargado reporte:</ion-card-subtitle>
+            <ion-item>
+                <ion-label class="fuente2">{{encargado_reporte}}</ion-label>
+            </ion-item>
+            <ion-card-subtitle class="fuente1">Operador:</ion-card-subtitle>
+            <ion-item>
+                <ion-label class="fuente2">{{operador}}</ion-label>
+            </ion-item>
+
+        </ion-card-content>
+    </ion-card>
+
+    <br>
+
+    <ion-grid>
+        <ion-row>
+            <ion-col class="ba">
+                Articulos
+            </ion-col>
+
+            <ion-col class="ba">
+                Estado
+            </ion-col>
+            <ion-col class="ba">
+                Comentario
+            </ion-col>
+            <ion-col class="ba">
+                Fotografia
+            </ion-col>
+
+        </ion-row>
+        <ion-row *ngFor="let historial of rep.recordset">
+            <ion-col class="row">
+                {{historial.nombre}}
+            </ion-col>
+
+            <ion-col class="row">
+                {{historial.estado}}
+            </ion-col>
+            <ion-col class="row">
+                {{historial.damage}}
+            </ion-col>
+            <ion-col class="row">
+                <ion-slides #slides *ngIf="historial.fotografia1 !== ''" pager="true" [options]="slideOpts" pager="true" style="width: 130px;">
+                    <ion-slide *ngIf="historial.fotografia1 !== ''">
+                        <ion-img src="http://192.168.9.144:3000/api/imagen/{{historial.fotografia1}}" style="height: 130px;"></ion-img>
+
+                    </ion-slide>
+                    <ion-slide *ngIf="historial.fotografia2 !== ''">
+                        <ion-img src="http://192.168.9.144:3000/api/imagen/{{historial.fotografia2}}" style="height: 130px;"></ion-img>
+
+                    </ion-slide>
+                    <ion-slide *ngIf="historial.fotografia3 !== ''">
+                        <ion-img src="http://192.168.9.144:3000/api/imagen/{{historial.fotografia3}}" style="height: 130px;"></ion-img>
+
+                    </ion-slide>
+                </ion-slides>
+
+
+            </ion-col>
+
+        </ion-row>
+
+
+    </ion-grid>
+
+
+
+
+
+</ion-content>
