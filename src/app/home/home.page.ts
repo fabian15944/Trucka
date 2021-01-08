@@ -7,8 +7,10 @@ import {ArticulosService} from '../Services/articulos.service'
 import { ReporteService } from '../Services/reporte.service';
 import { IonSlides } from '@ionic/angular';
 import Swal from 'sweetalert2';
+import { Storage } from '@ionic/storage';
 
-//storage
+
+const API_STORAGE_KEY = 'specialkey';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,7 @@ import Swal from 'sweetalert2';
 export class HomePage implements OnInit{
   trailer: any;
   Marca: any
-  @Input() conductor;
+  conductor: any;
   longitudImagenes= 0;
   date = new Date();
   posicion = 0;
@@ -29,7 +31,8 @@ export class HomePage implements OnInit{
   reporte: any;
   ubicacion:any;
   
-
+  encargado:any;
+  sucursal:any;
 
   @ViewChild('slides') slides: IonSlides;
   slideOpts = {
@@ -38,7 +41,7 @@ export class HomePage implements OnInit{
   };
   
   
-  constructor(private camera: Camera,
+  constructor(private camera: Camera,private storage: Storage,
      private routerActivated: ActivatedRoute,
      public http:HttpClient,
      public servicioarticulos: ArticulosService,
@@ -47,11 +50,12 @@ export class HomePage implements OnInit{
      private plt: Platform,
  
     private alertCtrl: AlertController, 
-    // private plt: Platform
+    
     ) {  
       
     this.trailer =  this.routerActivated.snapshot.queryParams.trailer;
-    this.Marca = this.routerActivated.snapshot.queryParams.Marca
+    this.Marca = this.routerActivated.snapshot.queryParams.Marca;
+    this.conductor = this.routerActivated.snapshot.queryParams.conductor;
     this.articulo = [] 
     this.reporte = [];
     
@@ -60,22 +64,20 @@ export class HomePage implements OnInit{
   siguiente(){
      let tope = this.reporte.length - 1;
      console.log(tope);
+    
     if(this.posicion === tope){
-    console.log('1')
-    this.ReporteTerminado()
+    this.ReporteTerminado();
     this.terminado = true;
 
     }else{
-      console.log('2')
-
       if(this.reporte[this.posicion].estado === 'Dañado'){
       if(this.reporte[this.posicion].valor === ''){
-        this.alertNull('Falta el valor del daño')
+        this.alertNull('Selecciona el daño encontrado')
 
       }
       else{
-      if(this.reporte[this.posicion].imagen === []){
-        this.alertNull('Falta la imegen')
+      if(this.reporte[this.posicion].imagen.length === 0 ){
+        this.alertNull('Falta la imagen')
       }
       else{
         if(this.reporte[this.posicion].comentario === ''){
@@ -91,7 +93,9 @@ export class HomePage implements OnInit{
 
       }else{
       this.posicion = this.posicion + 1;
+      
       this.HabilitarSiguiente = true;
+      
       }
     }
   }
@@ -110,64 +114,78 @@ export class HomePage implements OnInit{
         }
         this.reporte.push(articulo);
      }
-     console.log(this.reporte);
+    
   }
   ngOnInit(){
-    
-    // this.plt.ready().then(() => {
-    //   this.loadData(true);
-    // });
-    
-    console.log(this.Marca)
-    console.log(this.trailer);
-   
-    this.plt.ready().then(() => {
-      this.GetArticulos(true);
-    });
-
-    
+   this.GetArticulos()
+   this.getLocalData('usuario');
   }
   
-  GetArticulos(refresh = false, refresher?){
-    this.servicioarticulos.getArticulos(refresh,this.Marca).then(
+
+  private getLocalData(key) {
+    // console.log('return local data!');
+    try {
+      return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((valor) =>{
+      this.encargado = valor.recordset[0].NOM_USER;
+      this.sucursal = valor.recordset[0].SUCURSAL;
+    //  console.log('encargado',this.encargado)
+  });
+    } catch (error) {
+      Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Error',
+            text: error,
+            showConfirmButton: true         
+          });
+    }
+               
+  }
+
+
+
+  GetArticulos(){
+   
+    this.servicioarticulos.getArticulos(this.Marca).then(
       (Data)=>{
-        this.articulo = this.servicioarticulos.articulo;
-        this.ubicacion = this.articulo.recordset[0].ubicacion
-        
+        this.articulo = this.servicioarticulos.articulo;       
         this.editarArray();
-        // this.terminado = false;
-        if (refresher) {
-               refresher.target.complete();
-            }
-      }, (error) => {
+         (error) => {
         console.error('Entro a error', error);
       }
+    }
     )
   }
-  
- 
+
   anterior(){
     this.posicion = this.posicion - 1;
-    console.log(this.posicion)
+    this.HabilitarSiguiente = false;
   }
+
+
   enviar(){
-    console.log(this.reporte);
-    this.servicioreportes.postReporte(this.trailer,this.Marca,'fabian','ags','encargado',this.reporte, this.date);
+    let EnvReporte = {
+      num_unidad: this.trailer,
+      Marca: this.Marca,
+      operador: this.conductor,
+      sucursal: this.sucursal,
+      encargado: this.encargado,
+      reporte: this.reporte,
+      fecha: this.date
+    }
+    // console.log('enviar__',this.reporte)
+    this.servicioreportes.postReporte(EnvReporte).subscribe();
      this.router.navigate(['/start']);
   }
  
-
    checarEstado(){
     this.HabilitarSiguiente = false;
 
-     console.log(this.reporte[this.posicion].estado);
+    
      if(this.reporte[this.posicion].estado === 'Buen Estado' || this.reporte[this.posicion].estado === 'No Existe'){
        this.reporte[this.posicion].valor = '';
        this.reporte[this.posicion].comentario = '';
-       this.reporte[this.posicion].imagen = [];
-
-
-       console.log('buen estados')
+       this.reporte[this.posicion].imagen = [];  
     }
    }
 
@@ -189,7 +207,6 @@ export class HomePage implements OnInit{
             text: 'Eliminar',
             handler: (blah) =>{
               console.log('Seguir editando');
-              console.log(pos);
               this.reporte[this.posicion].imagen.splice(pos, 1);
               this.longitudImagenes = this.reporte[this.posicion].imagen.length;
             }
@@ -214,8 +231,9 @@ export class HomePage implements OnInit{
     });
     await alert.present();
   }
+
   async hacerFoto() {
-    if(this.reporte[this.posicion].imagen.length === 2){
+    if(this.reporte[this.posicion].imagen.length === 3){
     this.alertaImg();
     }else{
     const options: CameraOptions = {

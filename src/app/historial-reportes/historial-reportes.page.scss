@@ -5,7 +5,6 @@
     ;
 }
 
-
 .centrado {
     text-align: center;
     font-weight: bold;
@@ -19,6 +18,7 @@
 
 .fuente2 {
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 // .derecha {
@@ -26,20 +26,21 @@
 //     font-weight: bold;
 //     font-size: 18px;
 // }
-
-
-.ba{
-     background-color: rgba(241, 82, 82);
-       border: 1px solid black;
-       text-align: center;
-       color: rgb(251, 251, 251);
-  
-       
+.ba {
+    background-color: rgba(241, 82, 82);
+    border: 1px solid black;
+    text-align: center;
+    color: rgb(251, 251, 251);
 }
 
-.row{
-      border: 1px solid black;
-       text-align: left;
-      
+.row {
+    border: 1px solid black;
+    text-align: left;
+}
 
+ion-card {
+    margin-top: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #F1F1F1;
 }

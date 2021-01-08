@@ -6,9 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OfflineManagerService } from './Services/offline-manager.service';
 import { ConnectionStatus, NetworkService } from './Services/network.service';
 
-//storage
-// import { OfflineManagerService } from './services/offline-manager.service';
-// import { ConnectionStatus, NetworkService } from './Services/network.service';
+
 
 @Component({
   selector: 'app-root',
@@ -21,12 +19,14 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private offlineManager: OfflineManagerService,
-    private networkService: NetworkService
+    private networkService: NetworkService,
+  
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
+ 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

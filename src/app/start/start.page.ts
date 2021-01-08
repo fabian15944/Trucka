@@ -5,6 +5,14 @@ import { HistorialReportesPage } from '../historial-reportes/historial-reportes.
 import { ReporteService } from '../Services/reporte.service';
 import { LoadingController } from '@ionic/angular';
 import { Platform } from '@ionic/angular';
+import { ConnectionStatus, NetworkService } from '../Services/network.service';
+import { OfflineManagerService } from '../Services/offline-manager.service';
+import { Storage } from '@ionic/storage';
+
+
+
+const STORAGE_REQ_KEY = 'storedreq';
+
 
 @Component({
   selector: 'app-start',
@@ -14,58 +22,74 @@ import { Platform } from '@ionic/angular';
 export class StartPage implements OnInit {
   start: any;
   busqueda;
+  
   constructor(public servicioreportes: ReporteService,
               private router: Router, 
               private modalCtrl: ModalController,
               public loadingController: LoadingController,
-              private plt: Platform) {this.start = []; }
+              private plt: Platform,
+              private storage: Storage,
+              private networkService: NetworkService,
+              private offlineManager: OfflineManagerService,
+              
+              ) {this.start = []; }
 
   ngOnInit() {
     this.presentLoading();
-  
-      // this.servicioreportes.tarjetas().then(
-      //   (start) =>{
-      //     this.start = this.servicioreportes.start;
-      //   }
-      // );
       this.plt.ready().then(() => {
       this.loadData(true);
     });
-
+   
+   
   }
- 
+
   loadData(refresh = false, refresher?) {
     this.servicioreportes.tarjetas(refresh).then(res => {
       this.start = this.servicioreportes.start;
-      console.log('Start',this.start);
       if (refresher) {
         refresher.target.complete();
+        
+        
       }
     })
   }
 
-  async Historial(posicion){
-     this.presentLoading();
-      const modal = await this.modalCtrl.create({
-           component: HistorialReportesPage,
-           componentProps: {
-             id: this.start.recordset[posicion].id
-           }
-       });
-      modal.onDidDismiss().then((res)=>{
-        //this.presentLoadingCorrectivos();
+  Historial(posicion){
+    let navParams: NavigationExtras = {
+      queryParams: {
+        id: this.start.recordset[posicion].id   
+      }
+    }
+    
+    this.router.navigate(['historial-reportes'], navParams); 
+    
+    this.presentLoading();
+   
+  }
+
+
+//   async Historial(posicion){
+//      this.presentLoading();
+//       const modal = await this.modalCtrl.create({
+//            component: HistorialReportesPage,
+//            componentProps: {
+//              id: this.start.recordset[posicion].id
+//            }
+//        });
+//       modal.onDidDismiss().then((res)=>{
+//         //this.presentLoadingCorrectivos();
           
         
-      });
+//       });
   
-      return modal.present();
+//       return modal.present();
      
-}
+// }
 
 
-     cerrar() {
-    this.modalCtrl.dismiss()
-  }
+  //    cerrar() {
+  //   this.modalCtrl.dismiss()
+  // }
 
   
   async presentLoading() {

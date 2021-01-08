@@ -16,77 +16,82 @@
 <ion-content [fullscreen]="true">
     <div class="fecha">
         <ion-input disabled="true" id="fecha" style=" color: red;  font-size: 10px; font-weight: bold;" value="{{date | date:'dd/MM/yyyy'}}">
-
         </ion-input>
     </div>
 
     <div class="main">
 
         <h2>{{trailer}}</h2>
-        <h2 style="color: black;">{{ubicacion}}</h2>
-        <ion-img style="height: 250px;" src="assets/trailer.jpg"></ion-img>
+        <h2 style="color: black;">{{articulo.recordset[this.posicion].ubicacion}}</h2>
+        <ion-img style="height: 300px;" src="assets/{{articulo.recordset[this.posicion].foto}}.png"></ion-img>
     </div>
-    <div *ngIf="!terminado">
+    <!-- <div *ngIf="!terminado"> -->
+    <div>
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col>
+                    <div>
+                        <ion-list>
 
-        <div>
-            <ion-list>
+                            <ion-radio-group [(ngModel)]="reporte[posicion].estado" (ngModelChange)="checarEstado()">
+                                <ion-list-header>
+                                    <h3> {{articulo.recordset[this.posicion].nombre}}</h3>
+                                </ion-list-header>
 
-                <ion-radio-group [(ngModel)]="reporte[posicion].estado" (ngModelChange)="checarEstado()">
-                    <ion-list-header>
-                        <h3> {{articulo.recordset[posicion].nombre}}</h3>
-                    </ion-list-header>
+                                <ion-item>
+                                    <ion-label>Buen Estado</ion-label>
+                                    <ion-radio slot="start" value="Buen Estado"></ion-radio>
+                                </ion-item>
 
-                    <ion-item>
-                        <ion-label>Buen Estado</ion-label>
-                        <ion-radio slot="start" value="Buen Estado"></ion-radio>
-                    </ion-item>
+                                <ion-item>
+                                    <ion-label>Dañado</ion-label>
+                                    <ion-radio slot="start" value="Dañado"></ion-radio>
+                                </ion-item>
 
-                    <ion-item>
-                        <ion-label>Dañado</ion-label>
-                        <ion-radio slot="start" value="Dañado"></ion-radio>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label>No Existe</ion-label>
-                        <ion-radio slot="start" value="No Existe"></ion-radio>
-                    </ion-item>
-
-
-                </ion-radio-group>
-            </ion-list>
-
-            <ion-list *ngIf="reporte[posicion].estado === 'Dañado'">
-                <ion-radio-group [(ngModel)]="reporte[posicion].valor" (ngModelChange)="checarEstado()">
+                                <ion-item>
+                                    <ion-label>No Existe</ion-label>
+                                    <ion-radio slot="start" value="No Existe"></ion-radio>
+                                </ion-item>
 
 
-                    <ion-list-header>
-                        <h3>Selecciona el daño encontrado</h3>
-                    </ion-list-header>
+                            </ion-radio-group>
+                        </ion-list>
 
-                    <ion-item *ngIf="articulo.recordset[posicion].valor1">
-                        <ion-label>{{articulo.recordset[posicion].valor1}}</ion-label>
-                        <ion-radio slot="start" value="{{articulo.recordset[posicion].valor1}}"></ion-radio>
-                    </ion-item>
-                    <ion-item *ngIf="articulo.recordset[posicion].valor2">
-                        <ion-label>{{articulo.recordset[posicion].valor2}}</ion-label>
-                        <ion-radio slot="start" value="{{articulo.recordset[posicion].valor2}}"></ion-radio>
-                    </ion-item>
-                    <ion-item *ngIf="articulo.recordset[posicion].valor3">
-                        <ion-label>{{articulo.recordset[posicion].valor3}}</ion-label>
-                        <ion-radio slot="start" value="{{articulo.recordset[posicion].valor3}}"></ion-radio>
-                    </ion-item>
-                    <ion-item *ngIf="articulo.recordset[posicion].valor4">
-                        <ion-label>{{articulo.recordset[posicion].valor4}}</ion-label>
-                        <ion-radio slot="start" value="{{articulo.recordset[posicion].valor4}}"></ion-radio>
-                    </ion-item>
+                        <ion-list *ngIf="reporte[posicion].estado === 'Dañado'">
+                            <ion-radio-group [(ngModel)]="reporte[this.posicion].valor" (ngModelChange)="checarEstado()">
 
 
+                                <ion-list-header>
+                                    <h3>Selecciona el daño encontrado</h3>
+                                </ion-list-header>
 
-                </ion-radio-group>
-            </ion-list>
-        </div>
+                                <ion-item *ngIf="articulo.recordset[this.posicion].valor1">
+                                    <ion-label>{{articulo.recordset[posicion].valor1}}</ion-label>
+                                    <ion-radio slot="start" value="{{articulo.recordset[posicion].valor1}}"></ion-radio>
+                                </ion-item>
+                                <ion-item *ngIf="articulo.recordset[posicion].valor2">
+                                    <ion-label>{{articulo.recordset[posicion].valor2}}</ion-label>
+                                    <ion-radio slot="start" value="{{articulo.recordset[posicion].valor2}}"></ion-radio>
+                                </ion-item>
+                                <ion-item *ngIf="articulo.recordset[posicion].valor3">
+                                    <ion-label>{{articulo.recordset[posicion].valor3}}</ion-label>
+                                    <ion-radio slot="start" value="{{articulo.recordset[posicion].valor3}}"></ion-radio>
+                                </ion-item>
+                                <ion-item *ngIf="articulo.recordset[posicion].valor4">
+                                    <ion-label>{{articulo.recordset[posicion].valor4}}</ion-label>
+                                    <ion-radio slot="start" value="{{articulo.recordset[posicion].valor4}}"></ion-radio>
+                                </ion-item>
 
-        <img (click)="hacerFoto()" src="assets/addImage.png" *ngIf="reporte[posicion].estado === 'Dañado' && !reporte[posicion].imagen[0]  ">
+
+
+                            </ion-radio-group>
+                        </ion-list>
+                    </div>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+        <img (click)="hacerFoto()" src="assets/addImage.png" style="height: 40px; margin-top: 10px; margin-right: 10px;" *ngIf="reporte[posicion].estado === 'Dañado' && !reporte[posicion].imagen[0]  ">
         <!-- <ion-img style="height: 150px;" src="{{reporte[posicion].imagen}}" *ngIf="reporte[posicion].estado === 'Dañado' && reporte[posicion].imagen[0] "></ion-img> -->
         <ion-slides #slides *ngIf="reporte[posicion].imagen[0]" pager="true" [options]="slideOpts" pager="true">
             <ion-slide *ngFor="let foto of reporte[posicion].imagen index as i">
@@ -119,7 +124,7 @@
             <ion-textarea placeholder="Escribe un comentario" [(ngModel)]="reporte[posicion].comentario">
             </ion-textarea>
         </ion-item>
-        <ion-grid>
+        <ion-grid fixed>
             <ion-row>
                 <ion-col>
                     <ion-button (click)="anterior()" *ngIf="posicion > 0">Anterior </ion-button>
@@ -135,12 +140,12 @@
 
         </ion-grid>
     </div>
-    <div *ngIf="terminado">
+    <!-- <div *ngIf="terminado">
         <h3>Reporte terminado</h3>
         <h2>Gracias!</h2>
 
         <ion-button routerLink="/start" (click)="enviar()">Enviar </ion-button>
 
-    </div>
+    </div> -->
 
 </ion-content>

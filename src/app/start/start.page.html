@@ -34,7 +34,7 @@
             <ion-col></ion-col>
             <ion-col></ion-col>
             <!-- <ion-col style="font-size: 12px; float: right;">Total_Reportes</ion-col> -->
-            <ion-col style="font-size: 12px; float: right;">Daños</ion-col>
+            <!-- <ion-col style="font-size: 12px; float: right;">Daños</ion-col> -->
         </ion-row>
     </ion-grid>
     <ion-grid fixed>
@@ -46,13 +46,13 @@
 
                         <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px; color: rgb(235, 19, 19);"> {{reporte.num_unidad}}
                             <!-- <div *ngIf="rep.estado === 'fallo'" style="float: right; font-size: 16px; font-weight: bold; background-color: blue; color: white; width: 20px; text-align: center; border-radius: 3px;">2</div> -->
-                            <div style="float: right; font-size: 16px; font-weight: bold; margin-right: 20px; background-color: blue; color: white; width: 20px; text-align: center; border-radius: 3px;">1</div>
+                            <!-- <div style="float: right; font-size: 16px; font-weight: bold; margin-right: 20px; background-color: blue; color: white; width: 20px; text-align: center; border-radius: 3px;">1</div> -->
                             <!-- <div style="float: right; font-size: 16px; font-weight: bold; margin-right: 50px; background-color: red; color: white; width: 20px; text-align: center; border-radius: 3px;">4</div> -->
                         </ion-card-subtitle>
 
 
                         <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px;">{{reporte.operador}}</ion-card-subtitle>
-                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px;">{{reporte.fecha}}</ion-card-subtitle>
+                        <ion-card-subtitle style=" margin-top: 10px; font-weight: bold; font-size: 14px;">{{reporte.fecha | date:'d/M/yyyy, h:mm a'}}</ion-card-subtitle>
 
                     </ion-card-content>
 

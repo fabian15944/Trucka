@@ -28,44 +28,59 @@ export class BusquedaPage implements OnInit {
   }
 
   ngOnInit() {
-   
+  
   }
+
+  
   async presentLoading() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Por Favor Espere...',
+      duration: 4000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+  
+  }
+
+  async esperando() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando Datos...',
       duration: 2000
     });
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log('Cargando...!');
+  
   }
+  
   buscar() {
     this.serviciobuscar.getTractos(this.numero).then(
-      (Ntracto) => {
+      (Ntracto) => {  
         this.Numeconomico = this.serviciobuscar.Ntracto;
-      
-        this.no_serie_uni = this.Numeconomico.recordset[0].no_serie_uni;
-        if(this.Numeconomico.recordset.length === 0){
-          console.log('no existe')
-              this.MostrarInfo = false;
-              this.alertnoExiste();
-        }else{
-              this.MostrarInfo = true;
-        }     
+        if(this.Numeconomico.recordset.length === 0){  
+          this.MostrarInfo = false;
+          this.alertnoExiste();
+        }else {
+          this.MostrarInfo = true;
+          this.esperando()
+          this.no_serie_uni = this.Numeconomico.recordset[0].no_serie_uni;
+        } 
+
       },
       (error) => {     
         console.error('Entro a error', error);     
       }
     )
-    //this.MostrarInfo = true;
+   
   }
 
   // validacion del buscador
   vbuscador() {
     if (this.numero === "") {
-      console.log("no puedes dejar campo vacio")
+     
       Swal.fire({
         title: 'Error!',
         text: 'Ingresa el codigo de la unidad',
@@ -94,13 +109,18 @@ export class BusquedaPage implements OnInit {
     this.presentLoading();
   }
 
+
+
+
+
+  
   doRefresh(event) {
-    console.log('Begin async operation');
+    console.log('Cargando');
     setTimeout(() => {
-      console.log('Async operation has ended');
+      console.log('completado');
       event.target.complete();
       
-    }, 2000);
+    }, 3000);
   }
 
 
@@ -117,6 +137,7 @@ export class BusquedaPage implements OnInit {
   async alertNull(){
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-class',
+      
       header: '!Atencion¡',
       subHeader:'¿El numero de serie es correcto?',
       message: `${this.no_serie_uni}`, 
@@ -167,16 +188,3 @@ export class BusquedaPage implements OnInit {
 
 
 
-
-// else{
-//   if(this.numero.length === 6){
-//     Swal.fire({
-//       title: 'Error!',
-//       text: 'Ingresa el codigo de la unidad',
-//       icon: 'error',
-//       confirmButtonText: 'Aceptar',
-//     })
-//   } else {
-//   this.buscar()
-// }
-// }

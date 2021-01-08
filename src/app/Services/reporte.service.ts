@@ -8,7 +8,7 @@ import { Observable, from } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
 import { NetworkService,ConnectionStatus } from './network.service';
 import { OfflineManagerService } from './offline-manager.service';
-import { map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 
 const API_STORAGE_KEY = 'specialkey';
@@ -20,6 +20,7 @@ export class ReporteService {
   cuenta: any;
   start: any;
   rep: any;
+  urlstart: any;
   constructor(private storage: Storage,
      private networkService: NetworkService,
       private offlineManager: OfflineManagerService,
@@ -28,6 +29,7 @@ export class ReporteService {
        public loadingController: LoadingController) { this.url = environment.urlApi;
   this.rep = [];
   this.start = [];
+  this.urlstart = 'http://192.168.10.224:3003/api/';
   }
 
 
@@ -35,53 +37,47 @@ export class ReporteService {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Por Favor Espere...',
-      duration: 3000
+      duration: 4000
     });
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
     console.log('Cargando...!');
-    this.tarjetas();
+    // this.tarjetas();
   }
+
   
-  postReporte(num_unidad,Marca,operador,sucursal,encargado,reporte, fecha): Promise <void>{
-
+  postReporte(data):Observable <any>{
+    let url = 'http://192.168.10.224:3000/api/reporte'; 
+   
+    if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+      return from(this.offlineManager.storeRequest(url, 'POST', data));
+    }else{
+     
+      return this.http.post(url, data).pipe(
+        catchError(err => {
+          this.offlineManager.storeRequest(url, 'POST', data);
+          throw new Error(err);
+        })
+      );
+      
+    }
  
-    return new Promise((resolve, reject) => {
-      this.http.post(this.url + 'reporte',{ 
-       num_unidad,
-       Marca,
-       operador,
-       sucursal,
-       encargado,
-       reporte,
-       fecha
-      }).subscribe(res => {
-        console.log(res)
-        this.presentLoading();
-        resolve();
-
-      },err => {
-        console.log('error', err); 
-        reject()
-      });
-    
-    });
+  
   }
 
   tarjetas(forceRefresh: boolean = false):Promise <void> {
     if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline || !forceRefresh) {
-      // Return the cached data from Storage
-      // this.getLocalData('start');
+
       return this.getLocalData('start');
 
     } else {
   
     return new Promise((resolve, reject) => {
-      this.http.get(this.url + 'start').subscribe(res => {
-        console.log('Data_', res);
+      console.log('uralstart__',this.urlstart)
+      this.http.get(this.urlstart + 'start').subscribe(res => {
         this.start = res;
-        console.log(this.start);
+      console.log('res_start__',this.start)
         this.setLocalData('start', res );
         resolve();
 
@@ -110,7 +106,7 @@ private getLocalData(key) {
   try {
     return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((valor) =>{
     this.start = valor;
-    console.log("Hola getlocal date", valor)
+   
 });
   } catch (error) {
     Swal.fire({
@@ -121,19 +117,15 @@ private getLocalData(key) {
           showConfirmButton: true         
         });
   }
-  
+             
 }
 
   reporte(id):  Promise<void> {
-    console.log(id)
+    
     return new Promise((resolve, reject) => {
       this.http.get(this.url + `reporte/${id}`).subscribe(Data => {
-        // console.log(Data)
-
-        this.rep = Data;
-        console.log(this.rep)
+        this.rep = Data; 
         resolve();
-
       }, err => {
         console.log('error', err);
         Swal.fire({

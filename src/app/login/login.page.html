@@ -1,0 +1,56 @@
+<ion-header>
+    <ion-toolbar color="danger">
+
+        <ion-buttons style="height: 30px;">
+
+            <ion-title>LOGIN</ion-title>
+
+            <ion-img style="height: 40px; margin-left: 140px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size="12" size-lg="10" size-md="12" size-sm="12">
+                <ion-card>
+                    <ion-card-content>
+                        <h1 style="font-weight: bold;">Inspección tractos</h1>
+                        <img class="icon" src="assets/logoTrucka.png" alt="">
+                        <br>
+                        <br>
+
+                        <ion-item>
+                            <ion-label>
+                                <ion-icon name="person-outline"></ion-icon>
+                            </ion-label>
+                            <ion-input placeholder="Usuario" value="{{usuario}}" [(ngModel)]="usuario"></ion-input>
+                        </ion-item>
+                        <br>
+                        <ion-item>
+                            <ion-label>
+                                <ion-icon name="key-outline"></ion-icon>
+                            </ion-label>
+                            <ion-input placeholder="Contraseña" id="contraseña" type="password" value="{{password}}" [(ngModel)]="password" #passwordEyeRegister [type]="passwordTypeInput" clearOnEdit="false"></ion-input>
+                            <button item-end class="btn_eye_icon" (click)="togglePasswordMode()">
+              <ion-icon  [name]="(passwordTypeInput === 'text')?'eye-off':'eye'"></ion-icon>
+          </button>
+                        </ion-item>
+                        <br>
+                        <br>
+                        <ion-item>
+                            <ion-button style="height: 50px;" color="danger" (click)="logear()">Iniciar sesión</ion-button>
+                        </ion-item>
+
+                        <br>
+                        <br>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+</ion-content>

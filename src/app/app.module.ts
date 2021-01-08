@@ -15,6 +15,8 @@ import {HttpClientModule} from '@angular/common/http'
 import { Network } from '@ionic-native/network/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -22,6 +24,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,Ng2SearchPipeModule,
     IonicStorageModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     ],
   providers: [
     StatusBar,

@@ -30,12 +30,12 @@ export class OfflineManagerService {
           return this.sendRequests(storedObj).pipe(
             finalize(() => {
               let toast = this.toastController.create({
-                message: `Local data succesfully synced to API!`,
+                message: `Se guardado correctamente el reporte!`,
                 duration: 3000,
                 position: 'bottom'
               });
               toast.then(toast => toast.present());
- 
+             
               this.storage.remove(STORAGE_REQ_KEY);
             })
           );
@@ -49,9 +49,10 @@ export class OfflineManagerService {
  
   storeRequest(url, type, data) {
     let toast = this.toastController.create({
-      message: `Your data is stored locally because you seem to be offline.`,
+      message: `La peticion se ha guardado localmente`,
       duration: 3000,
       position: 'bottom'
+     
     });
     toast.then(toast => toast.present());
  
@@ -62,11 +63,11 @@ export class OfflineManagerService {
       time: new Date().getTime(),
       id: Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5)
     };
-    // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+    
  
     return this.storage.get(STORAGE_REQ_KEY).then(storedOperations => {
       let storedObj = JSON.parse(storedOperations);
- 
+
       if (storedObj) {
         storedObj.push(action);
       } else {
@@ -74,19 +75,20 @@ export class OfflineManagerService {
       }
       // Save old & new local transactions back to Storage
       return this.storage.set(STORAGE_REQ_KEY, JSON.stringify(storedObj));
+
     });
   }
  
   sendRequests(operations: StoredRequest[]) {
     let obs = [];
- 
-    for (let op of operations) {
+    for (let op of operations) {      
       console.log('Make one request: ', op);
-      let oneObs = this.http.request(op.type, op.url, op.data);
-      obs.push(oneObs);
+      let oneObs = this.http.request(op.type, op.url,{ body: op.data});     
+      obs.push(oneObs);    
     }
  
-    // Send out all local events and return once they are finished
+    // Enviando las peticiones 
     return forkJoin(obs);
   }
 }
+

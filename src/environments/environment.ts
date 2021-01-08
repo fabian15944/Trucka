@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  urlApi: 'http://192.168.9.144:3000/api/',
+  // urlApi: 'http://192.168.0.7:3000/api/'
+  urlApi: 'http://192.168.10.224:3000/api/'
+    // urlApi: 'http://192.168.9.144:3000/api/' ,
 };
 
 /*

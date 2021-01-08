@@ -24,17 +24,11 @@ export class ArticulosService {
     this.url = environment.urlApi;
    }
    
-   getArticulos(forceRefresh: boolean = false, Marca): Promise <void>{
-    if (this.networkService.getCurrentNetworkStatus() === ConnectionStatus.Offline || !forceRefresh) {
-      
-      return this.getLocalData('articulo');
-    } else {
+   getArticulos(Marca): Promise <void>{
     return new Promise((resolve, reject) => {
       this.http.get(this.url + `articulos/${Marca}`).subscribe(Data => {
         // console.log(Data)
         this.articulo = Data;
-        console.log(this.articulo)
-        this.setLocalData('articulo', Data);
         resolve();
 
       }, err => {
@@ -43,18 +37,14 @@ export class ArticulosService {
       });
     
     });
-  }
+  
   
    }
    private setLocalData(key, data) {
     this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
   }
    private getLocalData(key) {
-    console.log('return local data!');
-    // return this.storage.get(`${API_STORAGE_KEY}-${key}`).then(() =>{
-    //     this.articulo = Data;
-    // });
-
+     
     try {
       return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((valor) =>{
         this.articulo = valor;
@@ -71,12 +61,5 @@ export class ArticulosService {
     }
   }
   
-// postArticulos(): Promise<any>{
-//   return new Promise((resolve, reject) =>{
-//    this.http.post()
-//   });
-// }
-
-
 
 }
