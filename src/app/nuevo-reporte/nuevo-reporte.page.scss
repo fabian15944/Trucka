@@ -33,12 +33,6 @@ h2 {
     text-transform: uppercase;
 }
 
-img {
-    margin-top: 10px;
-    margin-left: 30px;
-    height: 700px;
-}
-
 #container a {
     text-decoration: none;
 }
@@ -54,4 +48,10 @@ ion-item {
 
 .add {
     color: rgb(26, 23, 23);
+}
+
+.comentario {
+    margin-top: 10px;
+    color: rgb(226, 4, 4);
+    text-transform: uppercase;
 }

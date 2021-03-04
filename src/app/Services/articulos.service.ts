@@ -10,7 +10,7 @@ const API_STORAGE_KEY = 'specialkey';
 
 @Injectable({
   providedIn: 'root'
-  
+
 })
 export class ArticulosService {
   url: string;
@@ -19,15 +19,15 @@ export class ArticulosService {
   constructor(private http: HttpClient,
     private networkService: NetworkService,
     private storage: Storage,
-     private offlineManager: OfflineManagerService
-    ) {
-    this.url = environment.urlApi;
-   }
-   
-   getArticulos(Marca): Promise <void>{
+    private offlineManager: OfflineManagerService
+  ) {
+    this.url = environment.urlbackend;
+  }
+
+  getArticulos(Marca): Promise<void> {
     return new Promise((resolve, reject) => {
       this.http.get(this.url + `articulos/${Marca}`).subscribe(Data => {
-        // console.log(Data)
+      
         this.articulo = Data;
         resolve();
 
@@ -35,31 +35,31 @@ export class ArticulosService {
         console.log('error', err);
         reject()
       });
-    
+
     });
-  
-  
-   }
-   private setLocalData(key, data) {
+
+
+  }
+  private setLocalData(key, data) {
     this.storage.set(`${API_STORAGE_KEY}-${key}`, data);
   }
-   private getLocalData(key) {
-     
+  private getLocalData(key) {
+
     try {
-      return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((valor) =>{
+      return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((valor) => {
         this.articulo = valor;
-      console.log("Hola getlocal date", valor)
-  });
+       
+      });
     } catch (error) {
       Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Error',
-            text: error,
-            showConfirmButton: true         
-          });
+        position: 'center',
+        icon: 'error',
+        title: 'Error',
+        text: error,
+        showConfirmButton: true
+      });
     }
   }
-  
+
 
 }

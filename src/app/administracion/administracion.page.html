@@ -1,0 +1,78 @@
+<ion-header>
+    <ion-toolbar color="danger">
+        <ion-buttons slot="start">
+
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons style="height: 30px;">
+            <!-- <ion-back-button defaultHref="/start"></ion-back-button> -->
+            <ion-title>administracion</ion-title>
+            <ion-img style="height: 40px; margin-center: 140px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
+
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col>
+                <ion-toolbar>
+                    <ion-searchbar style="margin-top: 30px;" class="mayusculas" placeholder="Ingreza la Marca" value="{{Marca}}" [(ngModel)]="Marca" animated="true"></ion-searchbar>
+                </ion-toolbar>
+                <br>
+                <ion-button style="float: right;" (click)="buscar()" color="danger">Buscar</ion-button>
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+
+    <ion-button (click)="click()" color="danger">Guardar</ion-button>
+    <div *ngIf="primera ">
+
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col class="ba" size="5">
+                    Ubicación
+                </ion-col>
+                <ion-col class="ba" size="7">
+                    Articulo
+                </ion-col>
+                <ion-col>
+
+
+                    <ion-list #myList lines="full">
+                        <ion-reorder-group [disabled]="false" (ionItemReorder)="editar($event)">
+                            <ion-item-sliding *ngFor="let hist of Articulos.recordset index as i">
+                                <ion-item>
+                                    <ion-label class="ion-text-wrap">
+                                        {{hist.Ubicacion}}
+                                    </ion-label>
+                                    <!-- <ion-label></ion-label> agregar cuando sea a movil -->
+                                    <ion-label class="ion-text-wrap">
+                                        {{hist.nombre}}
+                                    </ion-label>
+                                    <ion-reorder slot="end"></ion-reorder>
+                                    <ion-icon slot="end" name="add-outline" (click)="Agregar(i)"></ion-icon>
+                                </ion-item>
+                                <ion-item-options side="start">
+                                    <ion-item-option (click)="eliminararticulo(i)" color="danger" expandable>
+                                        Eliminar
+                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                    </ion-item-option>
+                                    <ion-item-option (click)="actualizararticulo(i)" color="tertiary" expandable>
+                                        Actualizar
+                                        <ion-icon slot="icon-only" name="sync-circle"></ion-icon>
+
+                                    </ion-item-option>
+                                </ion-item-options>
+                            </ion-item-sliding>
+                        </ion-reorder-group>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>

@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar color="danger">
+        <ion-title>Vista </ion-title>
+
+        <ion-buttons slot="end">
+            <ion-button (click)="salir()">cerrar</ion-button>
+        </ion-buttons>
+
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-slides #slides pager="true" [options]="slideOpts">
+        <ion-slide *ngFor="let fotos of imagenes index as i">
+
+            <ion-grid>
+
+                <ion-row *ngIf="fotos !== ''">
+                    <ion-img src="{{url}}imagen/{{fotos}}"></ion-img>
+
+                </ion-row>
+
+            </ion-grid>
+
+        </ion-slide>
+
+
+    </ion-slides>
+
+
+</ion-content>

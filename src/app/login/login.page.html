@@ -26,8 +26,10 @@
                             <ion-label>
                                 <ion-icon name="person-outline"></ion-icon>
                             </ion-label>
-                            <ion-input placeholder="Usuario" value="{{usuario}}" [(ngModel)]="usuario"></ion-input>
+                            <ion-input type="email" placeholder="Usuario" value="{{usuario}}" [(ngModel)]="usuario"></ion-input>
+
                         </ion-item>
+
                         <br>
                         <ion-item>
                             <ion-label>
@@ -35,13 +37,15 @@
                             </ion-label>
                             <ion-input placeholder="Contraseña" id="contraseña" type="password" value="{{password}}" [(ngModel)]="password" #passwordEyeRegister [type]="passwordTypeInput" clearOnEdit="false"></ion-input>
                             <button item-end class="btn_eye_icon" (click)="togglePasswordMode()">
-              <ion-icon  [name]="(passwordTypeInput === 'text')?'eye-off':'eye'"></ion-icon>
-          </button>
+                                <ion-icon [name]="(passwordTypeInput === 'text')?'eye-off':'eye'"></ion-icon>
+                            </button>
                         </ion-item>
                         <br>
                         <br>
                         <ion-item>
-                            <ion-button style="height: 50px;" color="danger" (click)="logear()">Iniciar sesión</ion-button>
+
+                            <ion-button style="height: 50px;" color="danger" (click)="logear()">Iniciar sesión
+                            </ion-button>
                         </ion-item>
 
                         <br>

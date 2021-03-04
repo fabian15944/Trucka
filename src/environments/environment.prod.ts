@@ -1,4 +1,6 @@
 export const environment = {
   production: true,
-  urlApi: 'http://192.168.10.224:3000/api/'
+  urlbackend: 'http://200.76.187.147:3000/api/',
+  urlstart: 'http://200.76.187.147:3006/api/',
+  urllogin: 'http://200.76.187.147:3005/api/'
 };

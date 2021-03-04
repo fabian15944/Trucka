@@ -13,29 +13,21 @@ export class BuscarService {
 
 
   constructor(private http: HttpClient) {
-    this.url = environment.urlApi;
+    this.url = environment.urlbackend;
   }
   getTractos(numero): Promise<void> {
-  
+
     return new Promise((resolve, reject) => {
       this.http.get(this.url + `buscar/${numero}`).subscribe(Data => {
         this.Ntracto = Data;
-    //     if(this.Ntracto.recordset.length === 0){
-    //       this.alertnoExiste();
-    // }else{
-      resolve();
-    // }
-     
-    
-
+        resolve();
       }, err => {
-        console.log('error', err);
         Swal.fire({
           position: 'center',
           icon: 'error',
           title: 'Error',
-          text: err.error.message,
-          showConfirmButton: true         
+          text: 'ERROR EN EL SERVIDOR. comunicate con sistemas',
+          showConfirmButton: true
         });
         reject()
       });
@@ -46,10 +38,10 @@ export class BuscarService {
   alertnoExiste() {
     Swal.fire({
       title: 'Error!',
-      text:'Unidad no encontrada',
+      text: 'Unidad no encontrada',
       icon: 'error',
       confirmButtonText: 'Aceptar',
     });
-}
+  }
 
 }

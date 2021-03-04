@@ -1,32 +1,25 @@
-<ion-header [translucent]="true">
+<ion-header>
 
     <ion-toolbar color="danger">
         <ion-buttons style="height: 30px;">
             <ion-title>
                 Reporte
-                <!--   <ion-img src="assets/logoTrucka.png" style="height: 30px;"></ion-img>-->
-
             </ion-title>
-            <ion-img style="height: 30px; margin-left: 140px;" src="assets/logoTrucka.png"></ion-img>
+
+            <ion-img style="height: 35px; margin-center: 150px;" src="assets/logoTrucka.png"></ion-img>
         </ion-buttons>
 
     </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-    <div class="fecha">
-        <ion-input disabled="true" id="fecha" style=" color: red;  font-size: 10px; font-weight: bold;" value="{{date | date:'dd/MM/yyyy'}}">
-        </ion-input>
-    </div>
-
-    <div class="main">
-
+<ion-content>
+    <div *ngIf="primera" class="main">
         <h2>{{trailer}}</h2>
-        <h2 style="color: black;">{{articulo.recordset[this.posicion].ubicacion}}</h2>
+        <h2 style="color: black;">{{articulo.recordset[posicion].ubicacion}}</h2>
         <ion-img style="height: 300px;" src="assets/{{articulo.recordset[this.posicion].foto}}.png"></ion-img>
     </div>
-    <!-- <div *ngIf="!terminado"> -->
-    <div>
+
+    <div *ngIf="primera">
         <ion-grid fixed>
             <ion-row>
                 <ion-col>
@@ -91,39 +84,74 @@
 
             </ion-row>
         </ion-grid>
-        <img (click)="hacerFoto()" src="assets/addImage.png" style="height: 40px; margin-top: 10px; margin-right: 10px;" *ngIf="reporte[posicion].estado === 'Dañado' && !reporte[posicion].imagen[0]  ">
-        <!-- <ion-img style="height: 150px;" src="{{reporte[posicion].imagen}}" *ngIf="reporte[posicion].estado === 'Dañado' && reporte[posicion].imagen[0] "></ion-img> -->
-        <ion-slides #slides *ngIf="reporte[posicion].imagen[0]" pager="true" [options]="slideOpts" pager="true">
-            <ion-slide *ngFor="let foto of reporte[posicion].imagen index as i">
-                <ion-grid>
-                    <ion-row>
-                        <ion-img src="{{foto}}"></ion-img>
 
-                    </ion-row>
-                    <ion-row>
-                        <ion-label style="margin-top: 35px; margin-right: 170px; ">{{i + 1}} de {{longitudImagenes}}</ion-label>
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col>
+                    <img (click)="hacerFoto()" src="assets/addImage.png" style="height: 70px;  margin-top: 10px; margin-right: 10px;" *ngIf="reporte[posicion].estado === 'Dañado' && !reporte[posicion].imagen[0]  ">
+                </ion-col>
 
-                        <ion-button (click)="hacerFoto()" color="light">
-                            <ion-icon class="add" name="camera-outline"></ion-icon>
-                        </ion-button>
+            </ion-row>
+        </ion-grid>
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col>
 
-                        <ion-button color="light" (click)="eliminarImagen(i)">
-                            <ion-icon class="trash" name="trash-outline"></ion-icon>
-                        </ion-button>
-                    </ion-row>
-                </ion-grid>
+                    <ion-slides #slides *ngIf="reporte[posicion].imagen[0]" pager="true" [options]="slideOpts">
+                        <ion-slide *ngFor="let foto of reporte[posicion].imagen index as i">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-img src="{{foto}}"></ion-img>
+
+                                </ion-row>
+                                <ion-row>
+                                    <ion-label style="margin-top: 35px; margin-right: 170px; ">{{i + 1}} de {{longitudImagenes}}</ion-label>
+
+                                    <ion-button (click)="hacerFoto()" color="light">
+                                        <ion-icon class="add" name="camera-outline"></ion-icon>
+                                    </ion-button>
+
+                                    <ion-button color="light" (click)="eliminarImagen(i)">
+                                        <ion-icon class="trash" name="trash-outline"></ion-icon>
+                                    </ion-button>
+                                </ion-row>
+                            </ion-grid>
 
 
 
-            </ion-slide>
+                        </ion-slide>
 
 
-        </ion-slides>
-        <ion-item *ngIf="reporte[posicion].estado === 'Dañado'">
-            <ion-label position="stacked">Comentarios</ion-label>
-            <ion-textarea placeholder="Escribe un comentario" [(ngModel)]="reporte[posicion].comentario">
-            </ion-textarea>
-        </ion-item>
+                    </ion-slides>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+
+        <ion-grid fixed *ngIf="reporte[posicion].estado === 'Dañado'">
+            <ion-row>
+                <ion-col>
+                    <ion-card>
+                        <ion-card-content>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-label class="comentario">Comentarios</ion-label>
+
+                                </ion-row>
+
+
+                            </ion-grid>
+                            <ion-item>
+
+                                <ion-textarea placeholder="Escribe tus observaciones..." [(ngModel)]="reporte[posicion].comentario">
+                                </ion-textarea>
+                            </ion-item>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
         <ion-grid fixed>
             <ion-row>
                 <ion-col>
@@ -132,7 +160,7 @@
 
 
                 <ion-col style="float: right;">
-                    <ion-button (click)="siguiente()" style="float: right;" disabled="{{HabilitarSiguiente}}">Siguiente </ion-button>
+                    <ion-button (click)="siguiente()" style="float: right;">Siguiente </ion-button>
 
                 </ion-col>
 
@@ -140,12 +168,5 @@
 
         </ion-grid>
     </div>
-    <!-- <div *ngIf="terminado">
-        <h3>Reporte terminado</h3>
-        <h2>Gracias!</h2>
-
-        <ion-button routerLink="/start" (click)="enviar()">Enviar </ion-button>
-
-    </div> -->
 
 </ion-content>

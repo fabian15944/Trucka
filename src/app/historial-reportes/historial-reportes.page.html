@@ -1,14 +1,28 @@
-<ion-header>
+<!-- <ion-header no-border>
     <ion-toolbar color="danger">
         <ion-title>Reporte de la unidad</ion-title>
+        <ion-menu-button></ion-menu-button> -->
+<!-- <ion-buttons slot="start"> -->
+<!-- <ion-back-button (click)="dismiss()"></ion-back-button> -->
+<!-- <ion-back-button defaultHref="/start"></ion-back-button> -->
 
-        <ion-buttons slot="start">
-            <!-- <ion-back-button (click)="dismiss()"></ion-back-button> -->
-            <ion-back-button defaultHref="/start"></ion-back-button>
+<!-- </ion-buttons> -->
+<!-- 
+    </ion-toolbar>
+</ion-header> -->
+<ion-header>
+    <ion-toolbar color="danger">
 
+        <ion-buttons style="height: 30px;">
+            <ion-menu-button></ion-menu-button>
+            <!-- <ion-back-button defaultHref="/start"></ion-back-button> -->
+
+            <ion-title>Reporte de la unidad</ion-title>
+            <ion-img style="height: 40px; margin-center: 140px;" src="assets/logoTrucka.png"></ion-img>
         </ion-buttons>
 
     </ion-toolbar>
+
 </ion-header>
 
 
@@ -38,7 +52,7 @@
                         </ion-item>
                         <ion-card-subtitle class="fuente1">Fecha:</ion-card-subtitle>
                         <ion-item>
-                            <ion-label class="fuente2">{{fecha | date:'d/M/yyyy, h:mm a'}}</ion-label>
+                            <ion-label class="fuente2">{{fecha }}</ion-label>
                         </ion-item>
                         <ion-card-subtitle class="fuente1">Reporte Generado Por:</ion-card-subtitle>
                         <ion-item>
@@ -58,34 +72,41 @@
 
     <ion-grid>
         <ion-row>
-            <ion-col class="ba">
+            <ion-col class="ba" size="3">
                 Articulos
             </ion-col>
 
-            <ion-col class="ba">
+            <ion-col class="ba" size="2">
                 Estado
             </ion-col>
-            <ion-col class="ba">
+            <ion-col class="ba" size="2">
                 Daño
             </ion-col>
-            <ion-col class="ba">
+            <ion-col class="ba" size="2">
+                comentario
+            </ion-col>
+            <ion-col class="ba" size="3">
                 Fotografia
             </ion-col>
 
         </ion-row>
-        <ion-row *ngFor="let historial of rep.recordset">
-            <ion-col class="row">
+        <ion-row *ngFor="let historial of rep.recordset index as i">
+            <ion-col class="row" size="3">
                 {{historial.nombre}}
             </ion-col>
 
-            <ion-col class="row">
+            <ion-col class="row" size="2">
                 {{historial.estado}}
             </ion-col>
-            <ion-col class="row">
+            <ion-col class="row" size="2">
                 {{historial.damage}}
             </ion-col>
-            <ion-col class="row">
-                <ion-slides #slides *ngIf="historial.fotografia1 !== ''" pager="true" [options]="slideOpts" pager="true" style="width: 130px;">
+            <ion-col class="row" size="2">
+                {{historial.comentario}}
+            </ion-col>
+
+            <ion-col class="row" size="3">
+                <ion-slides #slides *ngIf="historial.fotografia1 !== ''" pager="true" [options]="slideOpts" style="width: 130px;" (click)="Historial(i)">
                     <ion-slide *ngIf="historial.fotografia1 !== ''">
                         <ion-img src="{{url}}imagen/{{historial.fotografia1}}" style="height: 130px;"></ion-img>
 

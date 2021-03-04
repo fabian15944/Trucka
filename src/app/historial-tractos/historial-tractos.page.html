@@ -1,0 +1,231 @@
+<ion-header>
+    <ion-toolbar color="danger">
+        <ion-buttons slot="start">
+
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons style="height: 30px;">
+
+            <ion-title>Historial</ion-title>
+            <ion-img style="height: 40px; margin-center: 140px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
+
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col>
+                <ion-toolbar>
+                    <ion-searchbar style="margin-top: 30px;" class="mayusculas" placeholder="Codigo de la unidad" value="{{Numero}}" [(ngModel)]="Numero" animated="true"></ion-searchbar>
+                </ion-toolbar>
+                <br>
+
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size-sm="4" size-lg="4" size-md="6">
+                <mat-form-field class="example-form-field" appearance="fill">
+                    <mat-label>Selecionar las fechas</mat-label>
+                    <mat-date-range-input [formGroup]="campaignOne" [rangePicker]="campaignOnePicker" [comparisonStart]="campaignTwo.value.start" [comparisonEnd]="campaignTwo.value.end">
+                        <input [(ngModel)]="valor1" matStartDate placeholder="Dia Inicial" formControlName="start">
+                        <input [(ngModel)]="Valor2" matEndDate placeholder="Dia final" formControlName="end">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #campaignOnePicker>
+
+
+                    </mat-date-range-picker>
+                </mat-form-field>
+            </ion-col>
+            <ion-col size-sm="4" size-lg="2" size-md="6"></ion-col>
+            <ion-col size-sm="4" size-lg="2" size-md="6"></ion-col>
+
+            <ion-col size-sm="4" size-lg="4" size-md="6">
+                <ion-button style="float: right;" (click)="buscar()" color="danger">Buscar</ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+
+    <br>
+
+    <br>
+
+    <ion-grid *ngIf="MostrarInfo ">
+        <ion-row>
+            <ion-col>
+
+                <ion-card *ngFor="let res of nuevoarray  index as i ">
+                    <ion-card-content (click)="card(i)">
+
+                        <ion-card-subtitle class="centrado" color="danger"> Reporte Generado:</ion-card-subtitle>
+                        <br>
+
+                        <ion-card-subtitle class="fuente1">Número de la Unidad:</ion-card-subtitle>
+                        <ion-item>
+                            <ion-label class="fuente2">{{res.num_unidad}}</ion-label>
+                        </ion-item>
+
+                        <ion-card-subtitle class="fuente1">Sucursal:</ion-card-subtitle>
+                        <ion-item>
+                            <ion-label class="fuente2">{{res.sucursal}}</ion-label>
+                        </ion-item>
+                        <ion-card-subtitle class="fuente1">Fecha:</ion-card-subtitle>
+                        <ion-item>
+                            <ion-label class="fuente2">{{res.fecha }}</ion-label>
+                        </ion-item>
+                        <ion-card-subtitle class="fuente1">Reporte Generado Por:</ion-card-subtitle>
+                        <ion-item>
+                            <ion-label class="fuente2">{{res.encargado_reporte}}</ion-label>
+                        </ion-item>
+                        <ion-card-subtitle class="fuente1">Operador:</ion-card-subtitle>
+                        <ion-item>
+                            <ion-label class="fuente2">{{res.operador}}</ion-label>
+                        </ion-item>
+
+                    </ion-card-content>
+                    <ion-grid *ngIf="res.Mostrar">
+                        <ion-row>
+                            <ion-col class="ba" size="3">
+                                Articulos
+                            </ion-col>
+
+                            <ion-col class="ba" size="2">
+                                Estado
+                            </ion-col>
+                            <ion-col class="ba" size="2">
+                                Daño
+                            </ion-col>
+                            <ion-col class="ba" size="2">
+                                comentario
+                            </ion-col>
+                            <ion-col class="ba" size="3">
+                                Fotografia
+                            </ion-col>
+
+                        </ion-row>
+                        <ion-row *ngFor="let historial of reporte.recordset index as i">
+                            <ion-col class="row" size="3">
+                                {{historial.nombre}}
+                            </ion-col>
+
+                            <ion-col class="row" size="2">
+                                {{historial.estado}}
+                            </ion-col>
+                            <ion-col class="row" size="2">
+                                {{historial.damage}}
+                            </ion-col>
+                            <ion-col class="row" size="2">
+                                {{historial.comentario}}
+                            </ion-col>
+
+                            <ion-col class="row" size="3">
+                                <ion-slides #slides *ngIf="historial.fotografia1 !== ''" pager="true" [options]="slideOpts" style="width: 100px;" (click)="Historial(i)">
+                                    <ion-slide *ngIf="historial.fotografia1 !== ''">
+                                        <ion-img src="{{url}}imagen/{{historial.fotografia1}}" style="height: 100px;"></ion-img>
+
+                                    </ion-slide>
+                                    <ion-slide *ngIf="historial.fotografia2 !== ''">
+                                        <ion-img src="{{url}}imagen/{{historial.fotografia2}}" style="height: 100px;"></ion-img>
+
+                                    </ion-slide>
+                                    <ion-slide *ngIf="historial.fotografia3 !== ''">
+                                        <ion-img src="{{url}}imagen/{{historial.fotografia3}}" style="height: 100px;"></ion-img>
+
+                                    </ion-slide>
+                                </ion-slides>
+
+
+                            </ion-col>
+
+                        </ion-row>
+                    </ion-grid>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <!-- <ion-grid *ngIf="Mostrargrid">
+        <ion-row>
+            <ion-col class="ba">
+                Articulos
+            </ion-col>
+
+            <ion-col class="ba" size="2">
+                Estado
+            </ion-col>
+            <ion-col class="ba" size="2">
+                Daño
+            </ion-col>
+            <ion-col class="ba">
+                comentario
+            </ion-col>
+            <ion-col class="ba">
+                Fotografia
+            </ion-col>
+
+        </ion-row>
+        <ion-row *ngFor="let historial of reporte.recordset index as i">
+            <ion-col class="row">
+                {{historial.nombre}}
+            </ion-col>
+
+            <ion-col class="row" size="2">
+                {{historial.estado}}
+            </ion-col>
+            <ion-col class="row" size="2">
+                {{historial.damage}}
+            </ion-col>
+            <ion-col class="row">
+                {{historial.comentario}}
+            </ion-col>
+
+            <ion-col class="row">
+                <ion-slides #slides *ngIf="historial.fotografia1 !== ''" pager="true" [options]="slideOpts" style="width: 130px;" (click)="Historial(i)">
+                    <ion-slide *ngIf="historial.fotografia1 !== ''">
+                        <ion-img src="{{url}}imagen/{{historial.fotografia1}}" style="height: 130px;"></ion-img>
+
+                    </ion-slide>
+                    <ion-slide *ngIf="historial.fotografia2 !== ''">
+                        <ion-img src="{{url}}imagen/{{historial.fotografia2}}" style="height: 130px;"></ion-img>
+
+                    </ion-slide>
+                    <ion-slide *ngIf="historial.fotografia3 !== ''">
+                        <ion-img src="{{url}}imagen/{{historial.fotografia3}}" style="height: 130px;"></ion-img>
+
+                    </ion-slide>
+                </ion-slides>
+
+
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+ -->
+
+
+
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size="12" size-lg="8" size-md="8" size-sm="10">
+                <div style="float: right;" *ngIf="!MostrarInfo">
+                    <h1>No hay datos para mostrar</h1>
+                </div>
+
+            </ion-col>
+
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

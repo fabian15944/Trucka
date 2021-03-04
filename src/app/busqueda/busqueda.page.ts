@@ -5,6 +5,7 @@ import Swal from 'sweetalert2'
 import { AlertController, LoadingController } from '@ionic/angular';
 import 'sweetalert2/src/sweetalert2.scss'
 
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-busqueda',
@@ -16,8 +17,10 @@ export class BusquedaPage implements OnInit {
   Numeconomico: any;
   numero = "";
   no_serie_uni: any;
-  
+
   constructor(
+private navCtrl: NavController,
+
     private router: Router,
     public serviciobuscar: BuscarService,
     private alertCtrl: AlertController,
@@ -28,21 +31,10 @@ export class BusquedaPage implements OnInit {
   }
 
   ngOnInit() {
-  
+
   }
 
-  
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Por Favor Espere...',
-      duration: 4000
-    });
-    await loading.present();
 
-    const { role, data } = await loading.onDidDismiss();
-  
-  }
 
   async esperando() {
     const loading = await this.loadingController.create({
@@ -53,34 +45,34 @@ export class BusquedaPage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-  
+
   }
-  
+
   buscar() {
     this.serviciobuscar.getTractos(this.numero).then(
-      (Ntracto) => {  
+      (Ntracto) => {
         this.Numeconomico = this.serviciobuscar.Ntracto;
-        if(this.Numeconomico.recordset.length === 0){  
+        if (this.Numeconomico.recordset.length === 0) {
           this.MostrarInfo = false;
           this.alertnoExiste();
-        }else {
+        } else {
           this.MostrarInfo = true;
           this.esperando()
           this.no_serie_uni = this.Numeconomico.recordset[0].no_serie_uni;
-        } 
+        }
 
       },
-      (error) => {     
-        console.error('Entro a error', error);     
+      (error) => {
+        console.error('Entro a error', error);
       }
     )
-   
+
   }
 
   // validacion del buscador
   vbuscador() {
     if (this.numero === "") {
-     
+
       Swal.fire({
         title: 'Error!',
         text: 'Ingresa el codigo de la unidad',
@@ -88,11 +80,11 @@ export class BusquedaPage implements OnInit {
         confirmButtonText: 'Aceptar',
       });
       this.MostrarInfo = false;
-    }else {
+    } else {
       this.buscar()
     }
-  
-}
+
+  }
 
 
   redirect() {
@@ -100,80 +92,78 @@ export class BusquedaPage implements OnInit {
       queryParams: {
         trailer: this.numero,
         conductor: this.Numeconomico.recordset[0].nom_tra,
-        Marca: this.Numeconomico.recordset[0].marca
-        
+        Marca: this.Numeconomico.recordset[0].marca,
       }
     }
 
-    this.router.navigate(['home'], navParams);  
-    this.presentLoading();
-  }
+    this.router.navigate( ['nuevo-reporte'], navParams);
+    // this.presentLoading();
+  }  
+
+
+ 
 
 
 
 
 
-  
-  doRefresh(event) {
-    console.log('Cargando');
+  doRefresh(event) { 
     setTimeout(() => {
-      console.log('completado');
       event.target.complete();
-      
+
     }, 3000);
   }
 
 
-// Alertas de validaciones y mas 
+  // Alertas de validaciones y mas 
   alertnoExiste() {
     Swal.fire({
       title: 'Error!',
-      text:'Unidad no encontrada',
+      text: 'Unidad no encontrada',
       icon: 'error',
       confirmButtonText: 'Aceptar',
     });
-}
+  }
 
-  async alertNull(){
+  async alertNull() {
     const alert = await this.alertCtrl.create({
       cssClass: 'my-custom-class',
-      
-      header: '!Atencion¡',
-      subHeader:'¿El numero de serie es correcto?',
-      message: `${this.no_serie_uni}`, 
-        
+      header: 'Atención',
+      subHeader: '¿El número de serie es correcto?',
+      message: `${this.no_serie_uni}`,
+
       buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            handler: (blah) =>{
-              console.log('Seguir editando');
-            }
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: (blah) => {
+       
+          }
 
-          },
-          {
-            text: 'ok',
-            handler: (blah) =>{
-              console.log('Seguir editando');
-              this.redirect();
-            }
+        },
+        {
+          text: 'ok',
+          handler: (blah) => {
+     
+            this.redirect();
+          }
 
-          }]
+        }]
     });
     await alert.present();
-    }
-   
+  }
 
 
-    BtnCancelar(){
-      Swal.fire({
-        title: 'Atencion!',
-        text:'Si cancelas se perdera tu busqueda',
-        icon: 'warning',
-        confirmButtonText: 'Aceptar',
-      });
-      this.MostrarInfo = false;
-    }
+
+  BtnCancelar() {
+    Swal.fire({
+      title: 'Atencion!',
+      text: 'Si cancelas se perdera tu busqueda',
+      icon: 'warning',
+      confirmButtonText: 'Aceptar',
+    });
+    this.MostrarInfo = false;
+  }
 
 
 
@@ -182,7 +172,7 @@ export class BusquedaPage implements OnInit {
 
 
 
-  
+
 
 
 

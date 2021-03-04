@@ -21,15 +21,18 @@ export class ReporteService {
   start: any;
   rep: any;
   urlstart: any;
+
+
+
   constructor(private storage: Storage,
      private networkService: NetworkService,
       private offlineManager: OfflineManagerService,
       private http: HttpClient,
        private router:Router,
-       public loadingController: LoadingController) { this.url = environment.urlApi;
+       public loadingController: LoadingController) { this.url = environment.urlbackend;
   this.rep = [];
   this.start = [];
-  this.urlstart = 'http://192.168.10.224:3003/api/';
+  this.urlstart = environment.urlstart;
   }
 
 
@@ -42,13 +45,11 @@ export class ReporteService {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log('Cargando...!');
-    // this.tarjetas();
   }
 
   
   postReporte(data):Observable <any>{
-    let url = 'http://192.168.10.224:3000/api/reporte'; 
+    let url = this.url + 'reporte'; 
    
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
       return from(this.offlineManager.storeRequest(url, 'POST', data));
@@ -74,15 +75,12 @@ export class ReporteService {
     } else {
   
     return new Promise((resolve, reject) => {
-      console.log('uralstart__',this.urlstart)
       this.http.get(this.urlstart + 'start').subscribe(res => {
         this.start = res;
-      console.log('res_start__',this.start)
         this.setLocalData('start', res );
         resolve();
 
       }, err => {
-        console.log('error', err);
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -102,7 +100,6 @@ export class ReporteService {
 
 // Get cached API result
 private getLocalData(key) {
-  console.log('return local data!');
   try {
     return this.storage.get(`${API_STORAGE_KEY}-${key}`).then((valor) =>{
     this.start = valor;
@@ -127,7 +124,6 @@ private getLocalData(key) {
         this.rep = Data; 
         resolve();
       }, err => {
-        console.log('error', err);
         Swal.fire({
           position: 'center',
           icon: 'error',

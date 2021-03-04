@@ -1,3 +1,45 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+    <ion-menu type="push" side="start" menuId="first" contentId="Primermenu" class="my-custom-menu">
+        <ion-header>
+            <ion-toolbar color="danger">
+                <ion-title>Menu</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <ion-list>
+                <ion-item routerLink="/inicio-administracion">
+                    <ion-icon slot="start" name="home-sharp"></ion-icon>
+                    <ion-label class="fuente">Inicio</ion-label>
+                </ion-item>
+                <ion-item routerLink="/busqueda">
+                    <ion-icon slot="start" name="create-sharp"></ion-icon>
+                    <ion-label class="fuente">Generar Nuevo Reporte</ion-label>
+                </ion-item>
+                <ion-item routerLink="/historial-tractos">
+                    <ion-icon slot="start" name="calendar-sharp"></ion-icon>
+                    <ion-label class="fuente">Historial de reportes de una unidad</ion-label>
+                </ion-item>
+
+                <ion-item routerLink="/start">
+                    <ion-icon slot="start" name="folder-open-sharp"></ion-icon>
+                    <ion-label class="fuente">Consultar total de Reportes</ion-label>
+                </ion-item>
+                <ion-item routerLink="/tipoestado">
+                    <ion-icon slot="start" name="build-sharp"></ion-icon>
+                    <ion-label class="fuente">Nuevo Tipo de estado</ion-label>
+                </ion-item>
+                <ion-item routerLink="/administracion">
+                    <ion-icon slot="start" name="body"></ion-icon>
+                    <ion-label class="fuente">Administración de piezas</ion-label>
+                </ion-item>
+                <ion-item routerLink="/nuevainspeccion">
+                    <ion-icon slot="start" name="bulb-sharp"></ion-icon>
+                    <ion-label class="fuente">Nueva Inspeccion</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="Primermenu"></ion-router-outlet>
+
 </ion-app>

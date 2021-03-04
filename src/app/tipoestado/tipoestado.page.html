@@ -1,0 +1,178 @@
+<ion-header>
+    <ion-toolbar color="danger">
+        <ion-buttons slot="start">
+
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons style="height: 30px;">
+            <!-- <ion-back-button defaultHref="/start"></ion-back-button> -->
+            <ion-title>Nuevo Tipo de estado</ion-title>
+            <ion-img style="height: 40px; margin-center: 140px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
+
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+    <div *ngIf="primera">
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col size="12" size-lg="12" size-md="12" size-sm="12">
+
+                    <ion-card>
+                        <ion-card-content>
+
+                            <ion-card-subtitle class="centrado" color="danger">Nuevo Tipo De Estado:</ion-card-subtitle>
+                            <br>
+                            <ion-card-subtitle class="fuente1">Nombre</ion-card-subtitle>
+                            <ion-item>
+
+                                <ion-input class="fuente2" [(ngModel)]="nombre"></ion-input>
+                                <!-- <ion-label class="fuente2">{{nombre}}</ion-label> -->
+                            </ion-item>
+                            <!-- <ion-card-subtitle class="fuente1">Tipo de estado:</ion-card-subtitle> -->
+                            <ion-card-subtitle class="fuente1">Valores de tipo de estado</ion-card-subtitle>
+                            <ion-item>
+                                <ion-label class="fuente2">1.-</ion-label>
+                                <ion-input class="fuente2" [(ngModel)]="valor1"></ion-input>
+                            </ion-item>
+                            <ion-item>
+                                <ion-label class="fuente2">2.-</ion-label>
+                                <ion-input class="fuente2" [(ngModel)]="valor2"></ion-input>
+
+                            </ion-item>
+                            <ion-item>
+                                <ion-label class="fuente2">3.-</ion-label>
+                                <ion-input class="fuente2" [(ngModel)]="valor3"></ion-input>
+
+                            </ion-item>
+                            <ion-item>
+                                <ion-label class="fuente2">4.-</ion-label>
+                                <ion-input class="fuente2" [(ngModel)]="valor4"></ion-input>
+                            </ion-item>
+
+
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col size="2"></ion-col>
+                <ion-col size="3"></ion-col>
+                <ion-col size="3"></ion-col>
+                <ion-col size="4">
+                    <ion-button (click)="Guardar()" style="float: right;" color="danger">
+                        Guardar Cambios
+                    </ion-button>
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+        <!-- <ion-grid fixed>
+            <ion-row>
+                <ion-col class="ba" size="3">
+                    Nombre
+                </ion-col>
+
+                <ion-col class="ba" size="2">
+                    valor 1
+                </ion-col>
+                <ion-col class="ba" size="2">
+                    valor 2
+                </ion-col>
+                <ion-col class="ba" size="2">
+                    valor3
+                </ion-col>
+                <ion-col class="ba" size="2">
+                    valor 4
+                </ion-col>
+
+            </ion-row>
+            <ion-row *ngFor="let estados of estado_tipos.recordset index as i">
+                <ion-icon slot="start" name="add-outline" (click)="actualizar_estado(i)"></ion-icon>
+                <ion-col class="row" size="3">
+                    <ion-icon slot="start" name="add-outline" (click)="actualizar_estado(i)"></ion-icon>
+                    {{estados.Tipo_estado}}
+                </ion-col>
+
+                <ion-col class="row" size="2">
+                    {{estados.valor1}}
+                </ion-col>
+                <ion-col class="row" size="2">
+                    {{estados.valor2}}
+                </ion-col>
+                <ion-col class="row" size="2">
+                    {{estados.valor3}}
+                </ion-col>
+                <ion-col class="row" size="2">
+                    {{estados.valor4}}
+                </ion-col>
+
+            </ion-row>
+
+
+        </ion-grid> -->
+        <ion-grid>
+            <ion-row>
+                <ion-col class="ba" size="2">
+                    Nombre
+                </ion-col>
+
+                <ion-col class="ba" size="2">
+                    valor 1
+                </ion-col>
+                <ion-col class="ba" size="2">
+                    valor 2
+                </ion-col>
+                <ion-col class="ba" size="2">
+                    valor3
+                </ion-col>
+                <ion-col class="ba" size="4">
+                    valor 4
+                </ion-col>
+                <ion-col>
+
+
+                    <ion-list #myList lines="full">
+                        <!-- <ion-reorder-group [disabled]="false"> -->
+                        <ion-item-sliding *ngFor="let estados of estado_tipos.recordset index as i">
+                            <ion-item>
+                                <ion-label class="ion-text-wrap">
+                                    {{estados.Tipo_estado}}
+                                </ion-label>
+                                <!-- <ion-label></ion-label> agregar cuando sea a movil -->
+                                <ion-label class="ion-text-wrap">
+                                    {{estados.valor1}}
+                                </ion-label>
+                                <ion-label class="ion-text-wrap">
+                                    {{estados.valor2}}
+                                </ion-label>
+                                <ion-label class="ion-text-wrap">
+                                    {{estados.valor3}}
+                                </ion-label>
+                                <ion-label class="ion-text-wrap">
+                                    {{estados.valor4}}
+                                </ion-label>
+
+                            </ion-item>
+                            <ion-item-options side="start">
+
+                                <ion-item-option (click)="actualizar_estado(i)" color="tertiary" expandable>
+                                    Actualizar
+                                    <ion-icon slot="icon-only" name="sync-circle"></ion-icon>
+
+                                </ion-item-option>
+                            </ion-item-options>
+                        </ion-item-sliding>
+                        <!-- </ion-reorder-group> -->
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+    </div>
+
+</ion-content>

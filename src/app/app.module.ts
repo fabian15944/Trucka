@@ -17,14 +17,19 @@ import { IonicStorageModule } from '@ionic/storage';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule,Ng2SearchPipeModule,
+  imports: [BrowserModule,
+     IonicModule.forRoot(),
+      AppRoutingModule,HttpClientModule,Ng2SearchPipeModule,
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    BrowserAnimationsModule,
+ 
     ],
   providers: [
     StatusBar,
