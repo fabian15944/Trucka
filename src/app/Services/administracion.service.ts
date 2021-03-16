@@ -60,9 +60,21 @@ export class AdministracionService {
 
 Getarticulos(Marca):Promise<void>{
   return new Promise((resolve, reject) => {
-    this.http.get(this.url + `admin-tractos/${Marca}`).subscribe(Data => {
+    this.http.get(this.url + `admin-tractos/${Marca}`).subscribe(Data => { 
       this.articulos = Data; 
-      console.log(this.articulos)     
+      console.log(this.articulos)
+      if(this.articulos.recordset.length === 0){
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Error',
+          text: `No se encontraron Datos de la Marca ${Marca}`,
+          footer: 'Trucka',
+          showConfirmButton: true
+        });
+
+      }
+         
       resolve();
     }, err => {
       Swal.fire({
@@ -78,16 +90,15 @@ Getarticulos(Marca):Promise<void>{
   });
 }
 
-put_articulo(  nombre, Marca, ubicacion, id,foto,Tipo_estado){
+put_articulo(  nombre, Marca, ubicacion, id,foto,Tipo_estado,nombrefoto){
   // console.log( nombre, Marca, ubicacion, id,foto,act_foto,Tipo_estado)
-  return this.http.put(this.url + `admin/articulo/${nombre}/${Marca}/${ubicacion}/${id}/${foto}/${Tipo_estado}`,{
+  return this.http.put(this.url + `admin/articulo`,{
     nombre,
     Marca,
     ubicacion,
-    // tipo_estado,
     id,
     foto,
-  
+    nombrefoto,
     Tipo_estado
 
 
@@ -99,10 +110,22 @@ put_articulo(  nombre, Marca, ubicacion, id,foto,Tipo_estado){
     }
   )
 }
-Delete_articulo(id){
-  this.http.delete(this.url + `admin/${id}`).subscribe(Data => {    
+Delete_articulo(id,estado){
+  this.http.delete(this.url + `admin/${id}/${estado}`).subscribe(Data => {    
     console.log(Data)     
+    }, error =>{
+    console.log(error);
+    }
+  )
+}
 
+Post_modal_articulo(nuevoreporte){
+  return this.http.post(this.url + `administracion/post/articulo`,{
+    nuevoreporte
+
+  }).subscribe(
+    data => {
+    console.log(data);
     }, error =>{
     console.log(error);
     }
@@ -110,11 +133,9 @@ Delete_articulo(id){
 }
 
 
-
-
 post_articulo(Marca,Ubicacion,nombre,posicion,estado,foto,Tipo_estado){
   // console.log( nombre, Marca, ubicacion, id,foto,act_foto,Tipo_estado)
-  return this.http.post(this.url + `nuevo_reporte/${Marca}/${Ubicacion}/${nombre}/${posicion}/${estado}/${foto}/${Tipo_estado}`,{
+  return this.http.post(this.url + 'nuevo_reporte',{
     Marca,
     Ubicacion,
     nombre,
@@ -139,7 +160,7 @@ post_articulo(Marca,Ubicacion,nombre,posicion,estado,foto,Tipo_estado){
 
 post_estado(Tipo_estado,valor1,valor2,valor3,valor4){
   // console.log( nombre, Marca, ubicacion, id,foto,act_foto,Tipo_estado)
-  return this.http.post(this.url + `nuevo/Tipo_estado/${Tipo_estado}/${valor1}/${valor2}/${valor3}/${valor4}`,{
+  return this.http.post(this.url + `nuevo/Tipo_estado`,{
     Tipo_estado,valor1,valor2,valor3,valor4
 
   }).subscribe(
@@ -154,14 +175,17 @@ post_estado(Tipo_estado,valor1,valor2,valor3,valor4){
 
 put_estado(id,Tipo_estado,valor1,valor2,valor3,valor4){
   // console.log( nombre, Marca, ubicacion, id,foto,act_foto,Tipo_estado)
-  return this.http.put(this.url + `actualizar/Tipo_estado/${id}/${Tipo_estado}/${valor1}/${valor2}/${valor3}/${valor4}`,{
+  return this.http.put(this.url + 'actualizar/Tipo_estado',{
     id,Tipo_estado,valor1,valor2,valor3,valor4
   }).subscribe(
     data => {
     console.log(data);
     }, error =>{
     console.log(error);
+    
     }
   )
 }
+
+
 }

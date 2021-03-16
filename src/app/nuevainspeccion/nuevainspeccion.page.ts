@@ -28,24 +28,46 @@ export class NuevainspeccionPage implements OnInit {
   validar_foto = true;
   mostrar = false;
   id_Tipo_estado:any;
-
+  segunda = false;
+  
   posicion = '1';
   estado ='s';
+  Articulos:any;
   constructor(public loadingController: LoadingController,
     private modalController: ModalController,
     private tiposestado: AdministracionService,
     public actionSheetController: ActionSheetController,
     private alertCtrl: AlertController,
+    private Servicioadmin: AdministracionService,
 
   )
    { 
     this.estado_tipos = [];
     this.img = [];
-
+this.Articulos = [];
    }
 
   ngOnInit() {
     this.estado_tipo();
+  
+  }
+  
+  buscar() {
+    this.Servicioadmin.Getarticulos(this.Marca).then(
+     
+      (articulos) => {
+        this.Articulos = this.Servicioadmin.articulos
+       console.log(articulos)
+        //  this.editarArray();
+  
+         this.presentLoading();
+        // this.primera= true;
+        this.segunda = true;
+      },
+      (error) => {
+        console.error('Entro a error', error);
+      }
+    )
   
   }
   async presentActionSheet() {
@@ -95,9 +117,8 @@ export class NuevainspeccionPage implements OnInit {
           text: 'Eliminar',
           handler: (blah) => {
              this.img = '';
-            // (<HTMLInputElement>document.getElementById('img')).src =`assets/${this.foto}.png`;
-            // this.reporte[this.posicion].imagen.splice(pos, 1);
-            // this.longitudImagenes = this.reporte[this.posicion].imagen.length;
+             this.validar_foto = false;
+      
           }
 
         }]
@@ -107,11 +128,6 @@ export class NuevainspeccionPage implements OnInit {
   }
 
   
-  async quitarImagen(){
-    this.img = '';
-    (<HTMLInputElement>document.getElementById('img')).src = 'assets/Depocito.png'; 
-  
-  }
 
 // hacer foto con capacitor funciona solo para generar una version web o una pwa
 async  hacerFoto() {
@@ -165,7 +181,7 @@ async  fotoGaleria() {
   Guardar() {
   console.log(this.Marca,this.Ubicacion,this.nombre,this.posicion,this.estado,this.foto,this.id_Tipo_estado)
   this.tiposestado.post_articulo(this.Marca,this.Ubicacion,this.nombre,this.posicion,this.estado,this.img,this.id_Tipo_estado)
-  
+  this.buscar()
   }
 
   estado_tipo() {
@@ -221,6 +237,22 @@ async  fotoGaleria() {
     const { role, data } = await loading.onDidDismiss();
     this.primera = true;
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   

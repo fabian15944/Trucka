@@ -11,19 +11,20 @@
 
 <ion-content>
     <ion-slides #slides pager="true" [options]="slideOpts">
-        <ion-slide *ngFor="let fotos of imagenes index as i">
+        <div *ngFor="let fotos of imagenes index as i">
+            <ion-slide *ngIf="fotos !== ''">
 
-            <ion-grid>
+                <ion-grid>
 
-                <ion-row *ngIf="fotos !== ''">
-                    <ion-img src="{{url}}imagen/{{fotos}}"></ion-img>
+                    <ion-row>
+                        <ion-img src="{{url}}imagen/{{fotos}}.png "></ion-img>
 
-                </ion-row>
+                    </ion-row>
 
-            </ion-grid>
+                </ion-grid>
 
-        </ion-slide>
-
+            </ion-slide>
+        </div>
 
     </ion-slides>
 

@@ -1,4 +1,4 @@
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { OfflineManagerService } from './Services/offline-manager.service';
@@ -21,7 +21,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private offlineManager: OfflineManagerService,
     private networkService: NetworkService,
-
+    private menu: MenuController
   
   ) {
     this.initializeApp();
@@ -45,5 +45,10 @@ export class AppComponent {
       });
     });
   }
+
+  openEnd() {
+
+    this.menu.close('first')
+      }
   
 }

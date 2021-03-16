@@ -1,7 +1,6 @@
 <ion-header>
     <ion-toolbar color="danger">
         <ion-title>Vista </ion-title>
-        <ion-menu-button></ion-menu-button>
         <ion-buttons slot="end">
             <ion-button (click)="salir()">cerrar</ion-button>
         </ion-buttons>
@@ -59,11 +58,18 @@
 
                             <ion-card-subtitle class="fuente1">Fotografia</ion-card-subtitle>
                             <ion-item>
-
-                                <!-- <ion-img style="height: 300px;" src="assets/{{foto}}.png"></ion-img> -->
-                                <label [(ngModel)]="foto" type="file"></label>
+                                <ion-img (click)="presentActionSheet()" id="img" style="height: 300px;" src="assets/addImage.png"></ion-img>
                                 <!-- <ion-label class="fuente2">{{foto}}</ion-label> -->
                             </ion-item>
+                            <!-- <ion-item *ngif="imagen">
+                                <ion-img id="img"></ion-img>
+                            </ion-item> -->
+                            <ion-button (click)="presentActionSheet()" color="light">
+                                <ion-icon class="add" name="camera-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button color="light" (click)="eliminarImagen()">
+                                <ion-icon class="trash" name="trash-outline"></ion-icon>
+                            </ion-button>
 
 
                         </ion-card-content>

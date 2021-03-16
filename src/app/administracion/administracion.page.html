@@ -23,13 +23,15 @@
                     <ion-searchbar style="margin-top: 30px;" class="mayusculas" placeholder="Ingreza la Marca" value="{{Marca}}" [(ngModel)]="Marca" animated="true"></ion-searchbar>
                 </ion-toolbar>
                 <br>
+                <ion-button (click)="Guardar()" color="danger">Guardar</ion-button>
+
                 <ion-button style="float: right;" (click)="buscar()" color="danger">Buscar</ion-button>
             </ion-col>
 
         </ion-row>
     </ion-grid>
 
-    <ion-button (click)="click()" color="danger">Guardar</ion-button>
+
     <div *ngIf="primera ">
 
         <ion-grid fixed>

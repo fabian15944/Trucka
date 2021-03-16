@@ -45,14 +45,14 @@
                             </ion-item>
                             <ion-card-subtitle class="fuente1">Tipo de estado:</ion-card-subtitle>
                             <ion-item>
-                                <!-- <ion-label class="fuente2">{{tipo}}</ion-label> -->
+
                                 <ion-select [(ngModel)]="tipo_estado" class="custom-options" (ionChange)="CambioTipo()">
                                     <ion-select-option *ngFor="let t of this.estado_tipos.recordset">{{t.Tipo_estado}}</ion-select-option>
 
                                 </ion-select>
                             </ion-item>
                             <ion-card-subtitle class="fuente1">Valores de tipo de estado</ion-card-subtitle>
-                            <ion-label class="fuente2" *ngIf="validar_valores">sin valores</ion-label>
+                            <ion-label class="fuente2" *ngIf="validar_valores">SIN VALORES AUN</ion-label>
                             <ion-item *ngIf="valor1">
                                 <ion-label class="fuente2">{{valor1}}</ion-label>
                             </ion-item>
@@ -67,9 +67,14 @@
                             <ion-item *ngIf="valor4">
                                 <ion-label class="fuente2">{{valor4}}</ion-label>
                             </ion-item>
+                            <br>
+
 
                             <ion-card-subtitle class="fuente1">Fotografia</ion-card-subtitle>
-                            <img (click)="hacerFoto()" src="assets/addImage.png" style="height: 70px;  margin-top: 10px; margin-right: 10px;" *ngIf="validar_foto">
+                            <ion-fab-button (click)="hacerFoto()" *ngIf="validar_foto">
+                                <ion-icon name="camera"></ion-icon>
+                            </ion-fab-button>
+                            <!-- <img (click)="hacerFoto()" src="assets/addImage.png" style="height: 70px;  margin-top: 10px; margin-right: 10px;" *ngIf="validar_foto"> -->
                             <!-- <ion-label  class="fuente2" *ngIf="validar_valores" >No se a seleccionado Fotografia </ion-label> -->
                             <div *ngIf="mostrar">
                                 <ion-item>
@@ -102,5 +107,50 @@
             </ion-row>
         </ion-grid>
         <!-- expand="block" -->
+    </div>
+    <div *ngIf="segunda ">
+
+        <ion-grid fixed>
+            <ion-row>
+                <ion-col class="ba" size="5">
+                    Ubicación
+                </ion-col>
+                <ion-col class="ba" size="7">
+                    Articulo
+                </ion-col>
+                <ion-col>
+
+
+                    <ion-list #myList lines="full">
+                        <ion-reorder-group [disabled]="false" (ionItemReorder)="editar($event)">
+                            <ion-item-sliding *ngFor="let hist of Articulos.recordset index as i">
+                                <ion-item>
+                                    <ion-label class="ion-text-wrap">
+                                        {{hist.Ubicacion}}
+                                    </ion-label>
+                                    <!-- <ion-label></ion-label> agregar cuando sea a movil -->
+                                    <ion-label class="ion-text-wrap">
+                                        {{hist.nombre}}
+                                    </ion-label>
+                                    <!-- <ion-reorder slot="end"></ion-reorder>
+                                    <ion-icon slot="end" name="add-outline" (click)="Agregar(i)"></ion-icon> -->
+                                </ion-item>
+                                <ion-item-options side="start">
+                                    <ion-item-option (click)="eliminararticulo(i)" color="danger" expandable>
+                                        Eliminar
+                                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                                    </ion-item-option>
+                                    <ion-item-option (click)="actualizararticulo(i)" color="tertiary" expandable>
+                                        Actualizar
+                                        <ion-icon slot="icon-only" name="sync-circle"></ion-icon>
+
+                                    </ion-item-option>
+                                </ion-item-options>
+                            </ion-item-sliding>
+                        </ion-reorder-group>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </div>
 </ion-content>

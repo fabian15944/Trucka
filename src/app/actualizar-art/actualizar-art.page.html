@@ -65,14 +65,15 @@
                             <!-- <ion-item *ngif="imagen">
                                 <ion-img id="img"></ion-img>
                             </ion-item> -->
-                            <ion-button (click)="presentActionSheet()" color="light">
-                                <ion-icon class="add" name="camera-outline"></ion-icon>
-                            </ion-button>
-                            <ion-button color="light" (click)="eliminarImagen()">
-                                <ion-icon class="trash" name="trash-outline"></ion-icon>
-                            </ion-button>
+                            <div>
+                                <ion-button (click)="presentActionSheet()" color="light">
+                                    <ion-icon class="add" name="camera-outline"></ion-icon>
+                                </ion-button>
+                                <ion-button color="light" (click)="eliminarImagen()">
+                                    <ion-icon class="trash" name="trash-outline"></ion-icon>
+                                </ion-button>
 
-
+                            </div>
                         </ion-card-content>
                     </ion-card>
                 </ion-col>

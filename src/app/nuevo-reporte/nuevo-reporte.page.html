@@ -1,12 +1,13 @@
 <ion-header>
 
     <ion-toolbar color="danger">
-        <ion-buttons style="height: 30px;">
+        <ion-buttons slot="start" style="height: 30px;">
             <ion-title>
                 Reporte
             </ion-title>
-
-            <ion-img style="height: 35px; margin-center: 150px;" src="assets/logoTrucka.png"></ion-img>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-img style="height: 35px; " src="assets/logoTrucka.png"></ion-img>
         </ion-buttons>
 
     </ion-toolbar>
@@ -28,7 +29,7 @@
 
                             <ion-radio-group [(ngModel)]="reporte[posicion].estado" (ngModelChange)="checarEstado()">
                                 <ion-list-header>
-                                    <h3> {{articulo.recordset[this.posicion].nombre}}</h3>
+                                    <h3 class="h3"> {{articulo.recordset[this.posicion].nombre}}</h3>
                                 </ion-list-header>
 
                                 <ion-item>
@@ -75,8 +76,6 @@
                                     <ion-radio slot="start" value="{{articulo.recordset[posicion].valor4}}"></ion-radio>
                                 </ion-item>
 
-
-
                             </ion-radio-group>
                         </ion-list>
                     </div>
@@ -105,7 +104,7 @@
 
                                 </ion-row>
                                 <ion-row>
-                                    <ion-label style="margin-top: 35px; margin-right: 170px; ">{{i + 1}} de {{longitudImagenes}}</ion-label>
+                                    <ion-label style="margin-top: 30px; margin-right: 90px; ">{{i + 1}} de {{longitudImagenes}}</ion-label>
 
                                     <ion-button (click)="hacerFoto()" color="light">
                                         <ion-icon class="add" name="camera-outline"></ion-icon>

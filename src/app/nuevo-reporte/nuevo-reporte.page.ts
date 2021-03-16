@@ -8,7 +8,7 @@ import { ReporteService } from '../Services/reporte.service';
 import { IonSlides } from '@ionic/angular';
 import Swal from 'sweetalert2';
 import { Storage } from '@ionic/storage';
-// import { Plugins, CameraResultType } from '@capacitor/core';
+import { Plugins, CameraResultType } from '@capacitor/core';
 
 import * as moment from 'moment';
 
@@ -44,7 +44,7 @@ export class NuevoReportePage implements OnInit {
     initialSlide: 0,
     speed: 600,
     slidesPerView: 1,
-    autoplay:true
+   
   };
 
 
@@ -77,7 +77,7 @@ export class NuevoReportePage implements OnInit {
       this.terminado = true;
 
     } if (this.reporte[this.posicion].estado === ''){
-      this.alertNull('Aun no has seleccionado el estado');
+      this.alertNull('Aún no has seleccionado el estado');
     }
     else {
       
@@ -184,12 +184,12 @@ export class NuevoReportePage implements OnInit {
 // funcion para retroceder entre los articulos
   anterior() {
     this.posicion = this.posicion - 1;
-   
+    
   }
-
+ 
 // manda la variable EnvReporte al backend que contiene todos los datos del reporte
   enviar() {
-    console.log('conosle_reporte',this.reporte)
+    // console.log('conosle_reporte',this.reporte)
     let EnvReporte = {
       num_unidad: this.trailer,
       Marca: this.Marca,
@@ -201,7 +201,8 @@ export class NuevoReportePage implements OnInit {
     } 
    
     this.servicioreportes.postReporte(EnvReporte).subscribe();
-    this.router.navigate(['/busqueda']);
+    this.router.navigate(['/busqueda'])
+    
   }
 // se ejecuta cuando es buen estado o no existe es la primer funcion que entra y verifica los estados
   checarEstado() {
@@ -218,7 +219,7 @@ export class NuevoReportePage implements OnInit {
   async eliminarImagen(pos) {
     const alert = await this.alertCtrl.create({
       header: 'Atención',
-      message: '¿Estas seguro que quieres borrar esta imagen?',
+      message: '¿Seguro que quieres borrar esta imagen?',
       buttons: [
         {
           text: 'Cancelar',
@@ -245,7 +246,7 @@ export class NuevoReportePage implements OnInit {
   async alertaImg() {
     const alert = await this.alertCtrl.create({
       header: 'Atención',
-      message: 'El numero limite de imagenes es de 3',
+      message: 'El numero limite de imágenes es de 3',
       buttons: [
         , {
           text: 'Aceptar',

@@ -66,7 +66,7 @@ this.img = '';
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Completar con',
+      header: 'Completar accion con',
       cssClass: 'my-custom-class',
       buttons: [{
         text: 'Camara',
@@ -96,7 +96,7 @@ this.img = '';
   async eliminarImagen() {
     const alert = await this.alertCtrl.create({
       header: 'Atención',
-      message: '¿Estas seguro que quieres borrar esta imagen?',
+      message: '¿Seguro que quieres borrar esta imagen?',
       buttons: [
         {
           text: 'Cancelar',
@@ -129,7 +129,7 @@ this.img = '';
 
 // hacer foto con capacitor funciona solo para generar una version web o una pwa
 async  hacerFoto() {
-  const images = {
+  const images = { 
     quality: 90,
      allowEditing: true,
       resultType: CameraResultType.Base64,
@@ -142,7 +142,7 @@ async  hacerFoto() {
   // this.imagen.push(img);
   }, 
    (err) => {
-        console.log(err);
+        console.log(err); 
       });
     
 
@@ -156,6 +156,7 @@ async  fotoGaleria() {
   }
   await  Camera.getPhoto(images).then(imgdata => {
     this.img = 'data:image/jpeg;base64,' + imgdata.base64String;
+// this.foto = '';
     (<HTMLInputElement>document.getElementById('img')).src = this.img;
     
 
@@ -177,13 +178,13 @@ async  fotoGaleria() {
   Guardar() {
     if(this.img === ''){
       // console.log(this.nombre, this.Marca, this.Ubicacion, this.id, this.foto,this.img,this.id_Tipo_estado)
-        this.tiposestado.put_articulo(this.nombre, this.Marca, this.Ubicacion, this.id, this.foto,this.id_Tipo_estado)
+        this.tiposestado.put_articulo(this.nombre, this.Marca, this.Ubicacion, this.id, this.img,this.id_Tipo_estado,this.foto)
 
     this.salir()
     }else{
-      this.foto = '';
+      // this.foto = '';
     //  console.log(this.nombre, this.Marca, this.Ubicacion, this.id,this.foto, this.img,this.id_Tipo_estado)
-     this.tiposestado.put_articulo(this.nombre, this.Marca, this.Ubicacion, this.id, this.foto,this.id_Tipo_estado)
+     this.tiposestado.put_articulo(this.nombre, this.Marca, this.Ubicacion, this.id, this.img,this.id_Tipo_estado,this.foto)
     this.salir()
     }
  
